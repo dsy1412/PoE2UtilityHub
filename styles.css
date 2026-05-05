@@ -288,26 +288,46 @@ h1 {
   align-self: center;
 }
 
-.score-line {
+.star-score {
   display: grid;
-  grid-template-columns: 48px 42px 1fr;
+  grid-template-columns: 48px 42px max-content;
   align-items: center;
   gap: 8px;
   color: var(--muted);
   font-size: 13px;
 }
 
-.score-line b {
+.star-score b {
   color: var(--text);
 }
 
-.score-line i {
-  display: block;
-  height: 8px;
-  background: linear-gradient(90deg, var(--red), var(--gold));
-  border-radius: 999px;
-  width: var(--score);
-  box-shadow: 0 0 0 1px rgba(215, 168, 78, .16);
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  font-style: normal;
+  line-height: 1;
+}
+
+.stars span {
+  position: relative;
+  color: rgba(255, 244, 189, .22);
+  font-size: 17px;
+  text-shadow: 0 0 8px rgba(0, 0, 0, .7);
+}
+
+.stars span.is-full {
+  color: var(--gold-2);
+  text-shadow: 0 0 10px rgba(255, 242, 112, .35);
+}
+
+.stars span.is-half::before {
+  content: "★";
+  position: absolute;
+  inset: 0;
+  width: 50%;
+  overflow: hidden;
+  color: var(--gold-2);
+  text-shadow: 0 0 10px rgba(255, 242, 112, .35);
 }
 
 .primary-grid,
@@ -1170,8 +1190,8 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .score-line {
-    grid-template-columns: 44px 38px 1fr;
+  .star-score {
+    grid-template-columns: 44px 38px max-content;
   }
 
   h1 {

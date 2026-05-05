@@ -88,17 +88,41 @@
   function loadImportedDrafts() {
     try {
       const parsed = JSON.parse(localStorage.getItem("toolman.importedBuilds") || "[]");
-      return Array.isArray(parsed) ? parsed : [];
+      return Array.isArray(parsed) ? parsed.map(normalizeImportedBuild) : [];
     } catch (_error) {
       return [];
     }
   }
 
   function storeImportedDraft(build) {
+    build = normalizeImportedBuild(build);
     const drafts = loadImportedDrafts().filter((item) => item.id !== build.id);
     drafts.unshift(build);
     localStorage.setItem("toolman.importedBuilds", JSON.stringify(drafts.slice(0, 20)));
     builds = [...baseBuilds, ...drafts.slice(0, 20)];
+  }
+
+  function normalizeImportedBuild(build) {
+    if (!build || !build.importMeta) return build;
+    const meta = build.importMeta;
+    const character = meta.character || extractCharacterName(meta.sourceUrl) || build.shortTitle || "Imported Character";
+    return {
+      ...build,
+      title: `0.4 ${character}`,
+      shortTitle: character,
+      season: build.season || "0.4",
+      mode: build.mode && !/待归类|PoB/.test(build.mode) ? build.mode : "待归类",
+      cost: build.cost && !/待定/.test(build.cost) ? build.cost : "待定造价",
+      status: "角色导入模板，需人工整理",
+      tagline: `从 poe.ninja / ${character} 导入的工具人角色模板，请按实际 BD 修改定位、队伍收益和实战说明。`,
+      quickUse: [
+        "补充这个工具人的核心职责：增伤、承伤、喂球、药剂回复、诅咒或其他队伍收益。",
+        "把 PoB 自动导入的装备筛成真正绑定项，其余放到装备补位。",
+        "补充实战循环、范围要求、队友配合和版本风险。"
+      ],
+      templateType: "poe-ninja-character",
+      templateVersion: 1
+    };
   }
 
   function applyLanguage() {
@@ -205,6 +229,25 @@
     return itemByName(name)?.id || "";
   }
 
+  function extractCharacterName(url) {
+    const match = String(url || "").match(/\/character\/([^/?#]+)/i);
+    return match ? decodeURIComponent(match[1]) : "";
+  }
+
+  function fallbackItemIcon(slot = "", base = "") {
+    const text = `${slot} ${base}`.toLowerCase();
+    if (/flask|药剂|life flask|mana flask/.test(text)) return "./assets/icons/icon_flask.svg";
+    if (/glove|gauntlet|mitt|handwrap|手套/.test(text)) return "./assets/icons/icon_gloves.svg";
+    if (/boot|shoe|sandal|鞋/.test(text)) return "./assets/icons/icon_boots.png";
+    if (/helmet|helm|cap|mask|hood|tiara|头/.test(text)) return "./assets/icons/icon_helmet.png";
+    if (/body|armour|armor|robe|cuirass|jacket|coat|衣/.test(text)) return "./assets/icons/icon_body_armour.png";
+    if (/belt|腰/.test(text)) return "./assets/icons/icon_belt.png";
+    if (/amulet|talisman|项链/.test(text)) return "./assets/icons/icon_amulet.png";
+    if (/ring|戒指/.test(text)) return "./assets/icons/icon_ring_left.png";
+    if (/shield|buckler|focus|法器|盾/.test(text)) return "./assets/icons/icon_shield.png";
+    return "./assets/icons/icon_weapon.png";
+  }
+
   function pobImportForBuild(build) {
     return build.pobImportId ? pobImports[build.pobImportId] : null;
   }
@@ -233,12 +276,18 @@
   }
 
   function renderScore(label, value) {
-    const percent = Math.max(0, Math.min(5, value)) * 20;
+    const score = Math.max(0, Math.min(5, Number(value) || 0));
+    const scoreText = Number.isInteger(score) ? String(score) : score.toFixed(1).replace(/\.0$/, "");
+    const stars = Array.from({ length: 5 }, (_item, index) => {
+      const starValue = index + 1;
+      const className = score >= starValue ? "is-full" : score >= starValue - 0.5 ? "is-half" : "";
+      return `<span class="${className}" aria-hidden="true">★</span>`;
+    }).join("");
     return `
-      <div class="score-line">
+      <div class="star-score">
         <span>${escapeHtml(label)}</span>
-        <b>${value}/5</b>
-        <i style="--score:${percent}%"></i>
+        <b>${scoreText}/5</b>
+        <i class="stars" aria-label="${escapeHtml(label)} ${scoreText}/5">${stars}</i>
       </div>
     `;
   }
@@ -248,7 +297,8 @@
     els.buildList.innerHTML = list.length ? list.map((build) => {
       const coreItems = (build.requiredItems || []).map((item) => {
         const dbItem = item.dbId ? itemById(item.dbId) : null;
-        return `<img src="${escapeHtml(dbItem?.localIcon || dbItem?.icon || item.icon || build.portrait)}" alt="" title="${escapeHtml(dbItem?.cnName || item.label || item.slot)}">`;
+        const icon = dbItem?.localIcon || dbItem?.icon || item.icon || fallbackItemIcon(item.slot, item.label) || build.portrait;
+        return `<img src="${escapeHtml(icon)}" alt="" title="${escapeHtml(dbItem?.cnName || item.label || item.slot)}">`;
       }).join("");
       return `
         <button class="tool-card ${build.id === state.selectedId ? "is-active" : ""}" type="button" data-build-id="${escapeHtml(build.id)}">
@@ -269,7 +319,7 @@
   function renderRequiredItem(item) {
     const dbItem = item.dbId ? itemById(item.dbId) : null;
     const name = dbItem?.cnName || item.label || item.slot;
-    const icon = dbItem?.localIcon || dbItem?.icon || item.icon || "./assets/icons/icon_amulet.png";
+    const icon = dbItem?.localIcon || dbItem?.icon || item.icon || fallbackItemIcon(item.slot, item.label);
     const mods = [...(dbItem?.implicitMods || []), ...(dbItem?.explicitMods || [])].slice(0, 6);
     return `
       <article class="requirement">
@@ -363,7 +413,7 @@
         <div class="equipment-board">
           ${equipment.map((entry) => `
             <article class="equip-card ${entry.rarity === "UNIQUE" ? "is-unique" : ""}">
-              <div class="equip-icon">${entry.icon ? `<img src="${escapeHtml(entry.icon)}" alt="">` : `<span>${escapeHtml((entry.slot || "?").slice(0, 2))}</span>`}</div>
+              <div class="equip-icon"><img src="${escapeHtml(entry.icon || fallbackItemIcon(entry.slot, entry.base))}" alt=""></div>
               <div class="equip-copy">
                 <small>${escapeHtml(entry.slotLabel || entry.slot)}</small>
                 <strong>${escapeHtml(entry.name)}</strong>
@@ -801,7 +851,7 @@
         rarity: slot.item.rarity.toUpperCase(),
         mods: slot.item.mods,
         dbId: dbItem?.id || "",
-        icon: dbItem?.localIcon || dbItem?.icon || ""
+        icon: dbItem?.localIcon || dbItem?.icon || fallbackItemIcon(slot.name, slot.item.base)
       };
     });
     const uniqueSlots = slots.filter((slot) => slot.item.rarity.toUpperCase() === "UNIQUE");
@@ -821,7 +871,8 @@
     const className = buildNode?.getAttribute("className") || "待确认";
     const ascendancy = buildNode?.getAttribute("ascendClassName") || "待确认";
     const sourceLabel = source?.label || "PoB 导入";
-    const titleBase = source?.label?.split("/").pop()?.trim() || `${ascendancy} ${className}`;
+    const characterName = source?.character || extractCharacterName(source?.sourceUrl) || source?.label?.split("/").pop()?.trim() || `${ascendancy} ${className}`;
+    const titleBase = characterName;
 
     const draft = {
       id: buildDraftId(titleBase),
@@ -834,8 +885,10 @@
       cost: "待定",
       mode: "待归类",
       portrait: "./assets/gemling-legionnaire.webp",
-      status: "PoB 草稿，需人工整理",
-      tagline: `从 ${sourceLabel} 导入的 PoB 草稿，请补充工具人定位、队伍收益和实战说明。`,
+      status: "角色导入模板，需人工整理",
+      tagline: `从 poe.ninja / ${characterName} 导入的工具人角色模板，请按实际 BD 修改定位、队伍收益和实战说明。`,
+      templateType: "poe-ninja-character",
+      templateVersion: 1,
       conceptIds: [],
       ratings: {
         offense: 3,
@@ -850,7 +903,7 @@
       requiredItems: uniqueSlots.slice(0, 6).map((slot) => ({
         slot: slotLabel(slot.name),
         dbId: itemDbIdForName(slot.item.name),
-        icon: itemIconForName(slot.item.name),
+        icon: itemIconForName(slot.item.name) || fallbackItemIcon(slot.name, slot.item.base),
         label: slot.item.name,
         reason: `PoB 导入的暗金装备：${slot.item.base || "未知底子"}。请确认是否为 BD 绑定项。`
       })),
@@ -866,6 +919,7 @@
       importMeta: {
         sourceLabel,
         sourceUrl: source?.sourceUrl || "",
+        character: characterName,
         className,
         ascendancy,
         equipment: visualEquipment,
