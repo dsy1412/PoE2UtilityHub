@@ -37,6 +37,12 @@ Refresh PoE2DB base item icon cache:
 node scripts\crawl-poe2db-base-icons.mjs
 ```
 
+Refresh PoE2DB skill and support gem icon cache:
+
+```powershell
+node scripts\crawl-poe2db-skill-icons.mjs
+```
+
 Refresh poe.ninja PoB import-code cache:
 
 ```powershell

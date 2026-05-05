@@ -3,6 +3,7 @@
   const chronicle = window.POE2_CHRONICLE || [];
   const poe2Items = window.POE2DB_ITEMS || [];
   const poe2BaseItems = window.POE2DB_BASE_ITEMS || [];
+  const poe2Skills = window.POE2DB_SKILL_GEMS || [];
   const pobImports = window.POB_IMPORTS || {};
   const pobTree = window.POB_TREE_0_4 || null;
   let builds = [...baseBuilds, ...loadImportedDrafts()];
@@ -240,6 +241,20 @@
     )) || null;
   }
 
+  function skillByName(name) {
+    const key = normalizeSkillName(name);
+    if (!key) return null;
+    return poe2Skills.find((skill) => (
+      normalizeSkillName(skill.name) === key ||
+      normalizeSkillName(skill.cnName) === key ||
+      normalizeSkillName(skill.slug) === key
+    )) || null;
+  }
+
+  function normalizeSkillName(name) {
+    return normalizeName(String(name || "").replace(/\s+[IVX]+$/i, ""));
+  }
+
   function itemIconForName(name) {
     const dbItem = itemByName(name);
     return dbItem?.localIcon || dbItem?.icon || "";
@@ -252,6 +267,39 @@
 
   function iconForImportedItem(name, base, slot) {
     return itemIconForName(name) || baseIconForName(base) || baseIconForName(name) || fallbackItemIcon(slot, base || name);
+  }
+
+  function displayName(entry, fallback = "") {
+    if (!entry) return fallback;
+    return currentLang === "en" ? (entry.name || fallback) : (entry.cnName || entry.name || fallback);
+  }
+
+  function displayEquipmentName(entry) {
+    const dbItem = itemByName(entry.name);
+    return displayName(dbItem, entry.name);
+  }
+
+  function displayEquipmentBase(entry) {
+    const dbItem = baseItemByName(entry.base);
+    return displayName(dbItem, entry.base || entry.rarity || "");
+  }
+
+  function displayEquipmentMods(entry) {
+    const dbItem = itemByName(entry.name);
+    if (dbItem && currentLang !== "en") {
+      return [...(dbItem.implicitMods || []), ...(dbItem.explicitMods || [])].map(cleanMod);
+    }
+    return (entry.mods || []).map(cleanMod);
+  }
+
+  function displaySkillName(name) {
+    const dbSkill = skillByName(name);
+    return displayName(dbSkill, name);
+  }
+
+  function skillIconForName(name) {
+    const dbSkill = skillByName(name);
+    return dbSkill?.localIcon || dbSkill?.icon || "";
   }
 
   function itemDbIdForName(name) {
@@ -440,19 +488,24 @@
       <div class="visual-subsection">
         <h4>装备槽位</h4>
         <div class="equipment-board">
-          ${equipment.map((entry) => `
-            <article class="equip-card ${entry.rarity === "UNIQUE" ? "is-unique" : ""}">
-              <div class="equip-icon"><img src="${escapeHtml(entry.icon || fallbackItemIcon(entry.slot, entry.base))}" alt=""></div>
-              <div class="equip-copy">
-                <small>${escapeHtml(entry.slotLabel || entry.slot)}</small>
-                <strong>${escapeHtml(entry.name)}</strong>
-                <em>${escapeHtml(entry.base || entry.rarity || "")}</em>
-                ${entry.mods?.length ? `<ul>${entry.mods.slice(0, 4).map((mod) => `<li>${escapeHtml(cleanMod(mod))}</li>`).join("")}</ul>` : ""}
-              </div>
-            </article>
-          `).join("")}
+          ${equipment.map(renderEquipmentCard).join("")}
         </div>
       </div>
+    `;
+  }
+
+  function renderEquipmentCard(entry) {
+    const mods = displayEquipmentMods(entry).slice(0, 4);
+    return `
+      <article class="equip-card ${entry.rarity === "UNIQUE" ? "is-unique" : ""}">
+        <div class="equip-icon"><img src="${escapeHtml(entry.icon || iconForImportedItem(entry.name, entry.base, entry.slot))}" alt=""></div>
+        <div class="equip-copy">
+          <small>${escapeHtml(entry.slotLabel || entry.slot)}</small>
+          <strong>${escapeHtml(displayEquipmentName(entry))}</strong>
+          <em>${escapeHtml(displayEquipmentBase(entry))}</em>
+          ${mods.length ? `<ul>${mods.map((mod) => `<li>${escapeHtml(mod)}</li>`).join("")}</ul>` : ""}
+        </div>
+      </article>
     `;
   }
 
@@ -462,14 +515,33 @@
       <div class="visual-subsection">
         <h4>技能组</h4>
         <div class="skill-board">
-          ${skillGroups.map((group) => `
-            <article class="skill-card">
-              <strong>${escapeHtml(group.main || group.gems?.[0] || "Skill")}</strong>
-              <div>${(group.gems || []).map((gem, index) => `<span class="gem-pill ${index === 0 ? "is-main" : ""}">${escapeHtml(gem)}</span>`).join("")}</div>
-            </article>
-          `).join("")}
+          ${skillGroups.map(renderSkillCard).join("")}
         </div>
       </div>
+    `;
+  }
+
+  function renderSkillCard(group) {
+    const main = group.main || group.gems?.[0] || "Skill";
+    const mainIcon = skillIconForName(main);
+    return `
+      <article class="skill-card">
+        <div class="skill-card-head">
+          <span class="skill-icon ${mainIcon ? "" : "is-empty"}">${mainIcon ? `<img src="${escapeHtml(mainIcon)}" alt="">` : escapeHtml(displaySkillName(main).slice(0, 2))}</span>
+          <strong>${escapeHtml(displaySkillName(main))}</strong>
+        </div>
+        <div class="gem-list">${(group.gems || []).map((gem, index) => renderGemPill(gem, index === 0)).join("")}</div>
+      </article>
+    `;
+  }
+
+  function renderGemPill(gem, isMain) {
+    const icon = skillIconForName(gem);
+    return `
+      <span class="gem-pill ${isMain ? "is-main" : ""}">
+        ${icon ? `<img src="${escapeHtml(icon)}" alt="">` : ""}
+        ${escapeHtml(displaySkillName(gem))}
+      </span>
     `;
   }
 
