@@ -33,6 +33,8 @@
     "PoB 草稿导入器": "PoB Draft Importer",
     "本地缓存源": "Local Cache Source",
     "载入": "Load",
+    "poe.ninja 角色链接": "poe.ninja Character URL",
+    "手动粘贴 URL / Code": "Manual URL / Code",
     "PoB 导入码": "PoB Import Code",
     "生成网站草稿": "Generate Draft",
     "导入到本地预览": "Import To Preview",
@@ -63,6 +65,7 @@
     closeImporter: document.querySelector("#closePobImporter"),
     importSource: document.querySelector("#pobImportSource"),
     loadImportSource: document.querySelector("#loadPobSource"),
+    importUrl: document.querySelector("#pobSourceUrl"),
     importCode: document.querySelector("#pobImportCode"),
     parseImportCode: document.querySelector("#parsePobCode"),
     saveDraft: document.querySelector("#savePobDraft"),
@@ -125,6 +128,16 @@
     if (lead) lead.textContent = staticCopy.lead;
     if (searchLabel) searchLabel.textContent = staticCopy.search;
     if (els.search) els.search.placeholder = staticCopy.placeholder;
+    if (els.importUrl) {
+      els.importUrl.placeholder = isEnglish
+        ? "https://poe.ninja/poe2/profile/.../character/... (optional)"
+        : "https://poe.ninja/poe2/profile/.../character/...（可选）";
+    }
+    if (els.importCode) {
+      els.importCode.placeholder = isEnglish
+        ? "Paste an eNrt... code, or paste a poe.ninja URL + eNrt... together."
+        : "粘贴 eNrt... 导入码，也可以直接粘贴 poe.ninja 链接 + eNrt...";
+    }
 
     if (isEnglish) translateTextNodes(document.body);
   }
@@ -652,7 +665,7 @@
     if (!els.importSource) return;
     const entries = Object.entries(pobImports);
     els.importSource.innerHTML = entries.length
-      ? entries.map(([id, pob]) => `<option value="${escapeHtml(id)}">${escapeHtml(pob.label || id)}</option>`).join("")
+      ? `<option value="">手动粘贴 URL / Code</option>${entries.map(([id, pob]) => `<option value="${escapeHtml(id)}">${escapeHtml(pob.label || id)}</option>`).join("")}`
       : `<option value="">暂无本地缓存源</option>`;
   }
 
@@ -660,6 +673,40 @@
     if (!els.importStatus) return;
     els.importStatus.textContent = message;
     els.importStatus.dataset.type = type;
+  }
+
+  function parsePoeNinjaUrl(url) {
+    const cleanUrl = String(url || "").trim().replace(/[，,。]+$/g, "");
+    const match = cleanUrl.match(/^https?:\/\/poe\.ninja\/poe2\/profile\/([^/]+)\/([^/]+)\/character\/([^/?#]+)/i);
+    if (!match) return null;
+    const [, account, league, character] = match;
+    return {
+      sourceUrl: cleanUrl,
+      rawUrl: `https://poe.ninja/poe2/pob/raw/profile/code/${account}/${league}/${character}`,
+      protocolUrl: `pob2://poeninja/profile/code/${account}/${league}/${character}`,
+      label: `poe.ninja / ${decodeURIComponent(character)}`,
+      character: decodeURIComponent(character),
+      account: decodeURIComponent(account),
+      league: decodeURIComponent(league)
+    };
+  }
+
+  function extractPobImportPayload(rawText, sourceUrlText = "") {
+    const text = String(rawText || "").trim();
+    const inlineUrl = text.match(/https?:\/\/poe\.ninja\/poe2\/profile\/[^\s,，]+/i)?.[0] || "";
+    const sourceUrl = String(sourceUrlText || inlineUrl || "").trim().replace(/[，,。]+$/g, "");
+    let codeText = text;
+    if (inlineUrl) codeText = codeText.replace(inlineUrl, " ");
+    if (sourceUrl && codeText.includes(sourceUrl)) codeText = codeText.replace(sourceUrl, " ");
+    const candidates = codeText
+      .split(/[\s,，]+/)
+      .map((part) => part.trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, ""))
+      .filter((part) => /^[A-Za-z0-9_-]{80,}={0,2}$/.test(part));
+    const code = candidates.find((part) => part.startsWith("eN")) || candidates[0] || codeText.trim();
+    return {
+      code,
+      source: parsePoeNinjaUrl(sourceUrl) || (sourceUrl ? { sourceUrl, label: sourceUrl } : null)
+    };
   }
 
   async function decodePobCode(code) {
@@ -723,14 +770,15 @@
       .toLowerCase() || "pob-build"}`;
   }
 
-  function summarizePobXml(xmlText, sourceId) {
+  function summarizePobXml(xmlText, sourceId, directSource = null) {
     const doc = new DOMParser().parseFromString(xmlText, "application/xml");
     const parseError = doc.querySelector("parsererror");
     if (parseError || !doc.querySelector("PathOfBuilding2")) {
       throw new Error("PoB XML 解析失败。");
     }
 
-    const source = sourceId ? pobImports[sourceId] : null;
+    const cachedSourceId = directSource ? "" : sourceId;
+    const source = directSource || (cachedSourceId ? pobImports[cachedSourceId] : null);
     const buildNode = doc.querySelector("Build");
     const specNode = doc.querySelector("Tree Spec");
     const itemNodes = Array.from(doc.querySelectorAll("Items > Item"));
@@ -777,7 +825,7 @@
 
     const draft = {
       id: buildDraftId(titleBase),
-      pobImportId: sourceId || "",
+      pobImportId: cachedSourceId || "",
       title: `0.4 ${titleBase}`,
       shortTitle: titleBase,
       season: "0.4",
@@ -849,8 +897,11 @@
     try {
       setImportStatus("正在解压并解析 PoB code...");
       const sourceId = els.importSource?.value || "";
-      const xmlText = await decodePobCode(els.importCode.value);
-      const result = summarizePobXml(xmlText, sourceId);
+      const payload = extractPobImportPayload(els.importCode.value, els.importUrl?.value);
+      const xmlText = await decodePobCode(payload.code);
+      const result = summarizePobXml(xmlText, sourceId, payload.source);
+      if (els.importUrl && payload.source?.sourceUrl) els.importUrl.value = payload.source.sourceUrl;
+      if (els.importCode && payload.code !== els.importCode.value.trim()) els.importCode.value = payload.code;
       els.draftOutput.value = JSON.stringify(result.draft, null, 2);
       els.importPreview.innerHTML = `
         <strong>${escapeHtml(result.draft.title)}</strong>
@@ -916,6 +967,7 @@
         return;
       }
       els.importCode.value = pob.code;
+      if (els.importUrl) els.importUrl.value = pob.sourceUrl || "";
       setImportStatus(`已载入：${pob.label}`);
     });
 

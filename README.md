@@ -9,7 +9,7 @@ PoE2 Utility Hub is a static Path of Exile 2 support-build wiki focused on party
 - Mobile-friendly layout for build browsing and PoB import previews.
 - PoE2DB unique item cache with local icons where available.
 - poe.ninja / Path of Building import-code cache.
-- Browser-side PoB import parser: paste or load an import code, then generate a site draft.
+- Browser-side PoB import parser: paste a direct `poe.ninja` character URL plus an `eNrt...` code, paste only the code, or load a cached source.
 - Visual PoB import preview: equipment slots, unique item icons, skill groups, and passive-tree SVG based on local PoB `TreeData`.
 - Local draft preview via `localStorage` before formally adding a build to `data/builds.js`.
 
@@ -51,11 +51,19 @@ node scripts\check-passive-map.mjs
 
 ## Add A poe.ninja Build
 
+Fast manual path:
+
+1. Open the site and use `PoB Draft Import`.
+2. Paste the `poe.ninja` character URL into the URL field, then paste the `eNrt...` import code.
+3. You can also paste `https://poe.ninja/.../character/Name, eNrt...` directly into the code box; the importer will split the URL and code automatically.
+4. Generate the draft, review the visual equipment/skill/tree data, then import it into local preview or copy the JSON into `data/builds.js`.
+5. Rewrite the human-facing sections: position, usage, warnings, concept nodes, and ratings.
+
+Cached-source path:
+
 1. Add a source entry to `data/pob-sources.json`.
 2. Run `node scripts\crawl-poe-ninja-pob.mjs`.
 3. Open the site and use `PoB Draft Import`.
-4. Generate the draft, review the visual equipment/skill/tree data, then copy the JSON into `data/builds.js`.
-5. Rewrite the human-facing sections: position, usage, warnings, concept nodes, and ratings.
 
 ## GitHub Pages
 

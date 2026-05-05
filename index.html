@@ -61,8 +61,10 @@
               <select id="pobImportSource"></select>
               <button id="loadPobSource" class="action-button" type="button">载入</button>
             </div>
+            <label for="pobSourceUrl">poe.ninja 角色链接</label>
+            <input id="pobSourceUrl" type="url" spellcheck="false" placeholder="https://poe.ninja/poe2/profile/.../character/...（可选）">
             <label for="pobImportCode">PoB 导入码</label>
-            <textarea id="pobImportCode" spellcheck="false" placeholder="粘贴 eNrt... 导入码，或先从上方缓存源载入"></textarea>
+            <textarea id="pobImportCode" spellcheck="false" placeholder="粘贴 eNrt... 导入码，也可以直接粘贴 poe.ninja 链接 + eNrt..."></textarea>
             <div class="importer-actions">
               <button id="parsePobCode" class="action-button" type="button">生成网站草稿</button>
               <button id="savePobDraft" class="action-button" type="button">导入到本地预览</button>
