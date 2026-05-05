@@ -1,10 +1,11 @@
 (function () {
   const baseBuilds = window.TOOLMAN_BUILDS || [];
-  let builds = [...baseBuilds, ...loadImportedDrafts()];
   const chronicle = window.POE2_CHRONICLE || [];
   const poe2Items = window.POE2DB_ITEMS || [];
+  const poe2BaseItems = window.POE2DB_BASE_ITEMS || [];
   const pobImports = window.POB_IMPORTS || {};
   const pobTree = window.POB_TREE_0_4 || null;
+  let builds = [...baseBuilds, ...loadImportedDrafts()];
   let currentLang = localStorage.getItem("toolman.lang") || "zh";
   const englishText = {
     "工具人 BD 图鉴": "Support Build Atlas",
@@ -106,8 +107,17 @@
     if (!build || !build.importMeta) return build;
     const meta = build.importMeta;
     const character = meta.character || extractCharacterName(meta.sourceUrl) || build.shortTitle || "Imported Character";
+    const equipment = (meta.equipment || []).map((entry) => ({
+      ...entry,
+      icon: iconForImportedItem(entry.name, entry.base, entry.slot)
+    }));
     return {
       ...build,
+      importMeta: {
+        ...meta,
+        equipment,
+        uniques: equipment.filter((entry) => entry.rarity === "UNIQUE")
+      },
       title: `0.4 ${character}`,
       shortTitle: character,
       season: build.season || "0.4",
@@ -220,9 +230,28 @@
     return poe2Items.find((item) => normalizeName(item.name) === key || normalizeName(item.cnName) === key) || null;
   }
 
+  function baseItemByName(name) {
+    const key = normalizeName(name);
+    if (!key) return null;
+    return poe2BaseItems.find((item) => (
+      normalizeName(item.name) === key ||
+      normalizeName(item.cnName) === key ||
+      normalizeName(item.slug) === key
+    )) || null;
+  }
+
   function itemIconForName(name) {
     const dbItem = itemByName(name);
     return dbItem?.localIcon || dbItem?.icon || "";
+  }
+
+  function baseIconForName(name) {
+    const dbItem = baseItemByName(name);
+    return dbItem?.localIcon || dbItem?.icon || "";
+  }
+
+  function iconForImportedItem(name, base, slot) {
+    return itemIconForName(name) || baseIconForName(base) || baseIconForName(name) || fallbackItemIcon(slot, base || name);
   }
 
   function itemDbIdForName(name) {
@@ -851,7 +880,7 @@
         rarity: slot.item.rarity.toUpperCase(),
         mods: slot.item.mods,
         dbId: dbItem?.id || "",
-        icon: dbItem?.localIcon || dbItem?.icon || fallbackItemIcon(slot.name, slot.item.base)
+        icon: dbItem?.localIcon || dbItem?.icon || iconForImportedItem(slot.item.name, slot.item.base, slot.name)
       };
     });
     const uniqueSlots = slots.filter((slot) => slot.item.rarity.toUpperCase() === "UNIQUE");
@@ -903,7 +932,7 @@
       requiredItems: uniqueSlots.slice(0, 6).map((slot) => ({
         slot: slotLabel(slot.name),
         dbId: itemDbIdForName(slot.item.name),
-        icon: itemIconForName(slot.item.name) || fallbackItemIcon(slot.name, slot.item.base),
+        icon: iconForImportedItem(slot.item.name, slot.item.base, slot.name),
         label: slot.item.name,
         reason: `PoB 导入的暗金装备：${slot.item.base || "未知底子"}。请确认是否为 BD 绑定项。`
       })),

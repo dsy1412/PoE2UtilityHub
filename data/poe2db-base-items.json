@@ -1,0 +1,112 @@
+[
+  {
+    "id": "opulent-gloves",
+    "slug": "Opulent_Gloves",
+    "name": "Opulent Gloves",
+    "cnName": "丰裕手套 FourGlovesInt4Endgame /8",
+    "sourceUrl": "https://poe2db.tw/cn/Opulent_Gloves",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Gloves/Basetypes/GlovesInt04.webp",
+    "crawledAt": "2026-05-05T20:13:38.715Z",
+    "localIcon": "./assets/poe2db-base-icons/opulent-gloves.webp"
+  },
+  {
+    "id": "omen-sceptre",
+    "slug": "Omen_Sceptre",
+    "name": "Omen Sceptre",
+    "cnName": "预兆短杖 FourSceptre4 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Omen_Sceptre",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Weapons/OneHandWeapons/Scepters/Basetypes/Sceptre04.webp",
+    "crawledAt": "2026-05-05T20:13:39.701Z",
+    "localIcon": "./assets/poe2db-base-icons/omen-sceptre.webp"
+  },
+  {
+    "id": "lesser-life-flask",
+    "slug": "Lesser_Life_Flask",
+    "name": "Lesser Life Flask",
+    "cnName": "次级生命药剂 FourFlaskLife1 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Lesser_Life_Flask",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Flasks/Basetypes/FlaskLife01.webp",
+    "crawledAt": "2026-05-05T20:13:40.250Z",
+    "localIcon": "./assets/poe2db-base-icons/lesser-life-flask.webp"
+  },
+  {
+    "id": "solar-amulet",
+    "slug": "Solar_Amulet",
+    "name": "Solar Amulet",
+    "cnName": "日曜护身符 FourAmulet9 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Solar_Amulet",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Amulets/Basetypes/SolarAmulet.webp",
+    "crawledAt": "2026-05-05T20:13:40.810Z",
+    "localIcon": "./assets/poe2db-base-icons/solar-amulet.webp"
+  },
+  {
+    "id": "lesser-mana-flask",
+    "slug": "Lesser_Mana_Flask",
+    "name": "Lesser Mana Flask",
+    "cnName": "次级魔力药剂 FourFlaskMana1 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Lesser_Mana_Flask",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Flasks/Basetypes/FlaskMana01.webp",
+    "crawledAt": "2026-05-05T20:13:41.376Z",
+    "localIcon": "./assets/poe2db-base-icons/lesser-mana-flask.webp"
+  },
+  {
+    "id": "tasalian-focus",
+    "slug": "Tasalian_Focus",
+    "name": "Tasalian Focus",
+    "cnName": "塔萨里奥法器 FourFocus10Endgame /8",
+    "sourceUrl": "https://poe2db.tw/cn/Tasalian_Focus",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Offhand/Foci/Basetypes/Focus10.webp",
+    "crawledAt": "2026-05-05T20:13:41.932Z",
+    "localIcon": "./assets/poe2db-base-icons/tasalian-focus.webp"
+  },
+  {
+    "id": "sekhema-sandals",
+    "slug": "Sekhema_Sandals",
+    "name": "Sekhema Sandals",
+    "cnName": "丝克玛便鞋 FourBootsInt6Endgame /8",
+    "sourceUrl": "https://poe2db.tw/cn/Sekhema_Sandals",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Boots/Basetypes/BootsInt06.webp",
+    "crawledAt": "2026-05-05T20:13:42.495Z",
+    "localIcon": "./assets/poe2db-base-icons/sekhema-sandals.webp"
+  },
+  {
+    "id": "ancestral-tiara",
+    "slug": "Ancestral_Tiara",
+    "name": "Ancestral Tiara",
+    "cnName": "先祖冠冕 FourHelmetInt8Endgame /8",
+    "sourceUrl": "https://poe2db.tw/cn/Ancestral_Tiara",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Helmets/Basetypes/HelmetInt08.webp",
+    "crawledAt": "2026-05-05T20:13:43.438Z",
+    "localIcon": "./assets/poe2db-base-icons/ancestral-tiara.webp"
+  },
+  {
+    "id": "pearl-ring",
+    "slug": "Pearl_Ring",
+    "name": "Pearl Ring",
+    "cnName": "珠玉戒指 FourRing8 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Pearl_Ring",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Rings/Basetypes/PearlRing.webp",
+    "crawledAt": "2026-05-05T20:13:43.993Z",
+    "localIcon": "./assets/poe2db-base-icons/pearl-ring.webp"
+  },
+  {
+    "id": "fine-belt",
+    "slug": "Fine_Belt",
+    "name": "Fine Belt",
+    "cnName": "精致腰带 FourBelt11 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Fine_Belt",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Belts/Basetypes/Belt11.webp",
+    "crawledAt": "2026-05-05T20:13:44.547Z",
+    "localIcon": "./assets/poe2db-base-icons/fine-belt.webp"
+  },
+  {
+    "id": "champion-cuirass",
+    "slug": "Champion_Cuirass",
+    "name": "Champion Cuirass",
+    "cnName": "冠军胸甲 FourBodyStr12 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Champion_Cuirass",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/BodyArmours/Basetypes/BodyStr01.webp",
+    "crawledAt": "2026-05-05T20:13:45.114Z",
+    "localIcon": "./assets/poe2db-base-icons/champion-cuirass.webp"
+  }
+]

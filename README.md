@@ -31,6 +31,12 @@ Refresh PoE2DB unique item cache:
 node scripts\crawl-poe2db.mjs --all-uniques --download-icons
 ```
 
+Refresh PoE2DB base item icon cache:
+
+```powershell
+node scripts\crawl-poe2db-base-icons.mjs
+```
+
 Refresh poe.ninja PoB import-code cache:
 
 ```powershell
