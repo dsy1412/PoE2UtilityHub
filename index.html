@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>POE2 工具人 BD 图鉴</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <button id="languageToggle" class="language-toggle" type="button" aria-label="Switch language">EN</button>
+    <header class="site-header">
+      <div class="header-copy">
+        <p class="eyebrow">Path of Exile 2 Support Build Atlas</p>
+        <h1>工具人 BD 图鉴</h1>
+        <p class="lead">先看装备需求，再看用法。概念统一沉淀成知识节点，老手可以跳过，新手可以点开查。</p>
+      </div>
+      <div class="header-art" aria-hidden="true">
+        <img src="./assets/pathfinder.webp" alt="">
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="工具人列表">
+        <button id="openPobImporter" class="import-open" type="button">PoB 草稿导入</button>
+        <div class="search-box">
+          <label for="buildSearch">搜索工具人</label>
+          <input id="buildSearch" type="search" placeholder="职业、机制、装备、玩法">
+        </div>
+        <div class="filter-row" role="group" aria-label="玩法筛选">
+          <button class="chip is-active" data-filter="all" type="button">全部</button>
+          <button class="chip" data-filter="组队" type="button">组队</button>
+          <button class="chip" data-filter="挂机" type="button">挂机</button>
+        </div>
+        <nav id="buildList" class="build-list"></nav>
+      </aside>
+
+      <section id="buildDetail" class="build-detail" aria-live="polite"></section>
+
+      <aside class="reference-panel" aria-label="知识图谱">
+        <div class="panel-heading">
+          <p class="eyebrow">Knowledge Graph</p>
+          <h2>概念节点</h2>
+        </div>
+        <div id="chronicleList" class="chronicle-list"></div>
+      </aside>
+    </main>
+
+    <section id="pobImporter" class="importer-panel" aria-label="PoB 草稿导入器" hidden>
+      <div class="importer-card">
+        <div class="importer-head">
+          <div>
+            <p class="eyebrow">Path of Building Import</p>
+            <h2>PoB 草稿导入器</h2>
+          </div>
+          <button id="closePobImporter" class="icon-close" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="importer-grid">
+          <div class="importer-form">
+            <label for="pobImportSource">本地缓存源</label>
+            <div class="inline-controls">
+              <select id="pobImportSource"></select>
+              <button id="loadPobSource" class="action-button" type="button">载入</button>
+            </div>
+            <label for="pobImportCode">PoB 导入码</label>
+            <textarea id="pobImportCode" spellcheck="false" placeholder="粘贴 eNrt... 导入码，或先从上方缓存源载入"></textarea>
+            <div class="importer-actions">
+              <button id="parsePobCode" class="action-button" type="button">生成网站草稿</button>
+              <button id="savePobDraft" class="action-button" type="button">导入到本地预览</button>
+              <button id="copyPobDraft" class="action-button ghost" type="button">复制草稿 JSON</button>
+            </div>
+            <p id="pobImportStatus" class="importer-status">草稿会在浏览器本地解析，不会上传。</p>
+          </div>
+          <div class="importer-result">
+            <div id="pobImportPreview" class="draft-preview"></div>
+            <textarea id="pobDraftOutput" readonly spellcheck="false"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="./data/chronicle.js"></script>
+    <script src="./data/poe2db-items.js"></script>
+    <script src="./data/pob-imports.js"></script>
+    <script src="./data/pob-tree-0_4.js"></script>
+    <script src="./data/builds.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
