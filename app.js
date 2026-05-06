@@ -127,11 +127,16 @@
       ...entry,
       icon: iconForImportedItem(entry.name, entry.base, entry.slot)
     }));
+    const treeJewels = (meta.treeJewels || []).map((entry) => ({
+      ...entry,
+      icon: iconForImportedItem(entry.name, entry.base, "Jewel")
+    }));
     return {
       ...build,
       importMeta: {
         ...meta,
         equipment,
+        treeJewels,
         uniques: equipment.filter((entry) => entry.rarity === "UNIQUE")
       },
       title: `0.4 ${character}`,
@@ -285,6 +290,11 @@
     return itemIconForName(name) || baseIconForName(base) || baseIconForName(name) || fallbackItemIcon(slot, base || name);
   }
 
+  function isPassiveJewelItem(item) {
+    const text = `${item?.name || ""} ${item?.base || ""} ${(item?.mods || []).join(" ")}`.toLowerCase();
+    return /jewel|diamond|ruby|sapphire|emerald|time-lost|timeless|against the darkness|from nothing|megalomaniac|adorned|radius|passive skills/.test(text);
+  }
+
   function displayName(entry, fallback = "") {
     if (!entry) return fallback;
     return currentLang === "en" ? (entry.name || fallback) : (entry.cnName || entry.name || fallback);
@@ -329,6 +339,7 @@
 
   function fallbackItemIcon(slot = "", base = "") {
     const text = `${slot} ${base}`.toLowerCase();
+    if (/jewel|diamond|ruby|sapphire|emerald|time-lost|timeless/.test(text)) return "./assets/icons/icon_jewel.svg";
     if (/flask|药剂|life flask|mana flask/.test(text)) return "./assets/icons/icon_flask.svg";
     if (/glove|gauntlet|mitt|handwrap|手套/.test(text)) return "./assets/icons/icon_gloves.svg";
     if (/boot|shoe|sandal|鞋/.test(text)) return "./assets/icons/icon_boots.png";
@@ -475,6 +486,7 @@
     if (!meta) return "";
     const equipment = meta.equipment || [];
     const uniques = meta.uniques || [];
+    const treeJewels = meta.treeJewels || [];
     const skills = meta.skillGroups || [];
     const passiveNodes = meta.passiveNodes || [];
 
@@ -488,10 +500,12 @@
           <span>${escapeHtml(meta.className || build.className)} / ${escapeHtml(meta.ascendancy || build.ascendancy)}</span>
           <span>装备 ${equipment.length} 件</span>
           <span>暗金 ${uniques.length} 件</span>
+          <span>天赋树珠宝 ${treeJewels.length} 颗</span>
           <span>技能组 ${skills.length} 组</span>
           <span>天赋节点 ${meta.nodeCount || passiveNodes.length} 个</span>
         </div>
         ${renderEquipmentBoard(equipment)}
+        ${renderTreeJewels(treeJewels, meta.socketNodes || [])}
         ${renderSkillGroups(skills)}
         ${renderPassiveNodeCloud(passiveNodes, meta.nodeCount)}
       </section>
@@ -517,6 +531,36 @@
         <div class="equip-icon"><img src="${escapeHtml(entry.icon || iconForImportedItem(entry.name, entry.base, entry.slot))}" alt=""></div>
         <div class="equip-copy">
           <small>${escapeHtml(entry.slotLabel || entry.slot)}</small>
+          <strong>${escapeHtml(displayEquipmentName(entry))}</strong>
+          <em>${escapeHtml(displayEquipmentBase(entry))}</em>
+          ${mods.length ? `<ul>${mods.map((mod) => `<li>${escapeHtml(mod)}</li>`).join("")}</ul>` : ""}
+        </div>
+      </article>
+    `;
+  }
+
+  function renderTreeJewels(jewels, socketNodes = []) {
+    if (!jewels?.length && !socketNodes?.length) return "";
+    return `
+      <div class="visual-subsection">
+        <h4>天赋树珠宝</h4>
+        <div class="jewel-summary">
+          <span>${escapeHtml(jewels.length)} 颗珠宝</span>
+          <span>${escapeHtml(socketNodes.length)} 个已点珠宝孔</span>
+        </div>
+        ${jewels?.length ? `<div class="jewel-board">${jewels.map(renderJewelCard).join("")}</div>` : ""}
+        ${socketNodes?.length ? `<div class="socket-node-list">${socketNodes.map((node) => `<span>${escapeHtml(node.name || "Jewel Socket")} #${escapeHtml(node.id)}</span>`).join("")}</div>` : ""}
+      </div>
+    `;
+  }
+
+  function renderJewelCard(entry) {
+    const mods = displayEquipmentMods(entry).slice(0, 5);
+    return `
+      <article class="jewel-card ${entry.rarity === "UNIQUE" ? "is-unique" : ""}">
+        <div class="jewel-icon"><img src="${escapeHtml(entry.icon || iconForImportedItem(entry.name, entry.base, "Jewel"))}" alt=""></div>
+        <div class="equip-copy">
+          <small>${escapeHtml(entry.slotLabel || "天赋树")}</small>
           <strong>${escapeHtml(displayEquipmentName(entry))}</strong>
           <em>${escapeHtml(displayEquipmentBase(entry))}</em>
           ${mods.length ? `<ul>${mods.map((mod) => `<li>${escapeHtml(mod)}</li>`).join("")}</ul>` : ""}
@@ -906,7 +950,7 @@
       .filter((line) => !ignored.test(line))
       .filter((line) => !/^\d+%?$/.test(line))
       .slice(0, 8);
-    return { rarity, name, base, mods };
+    return { rarity, name, base, mods, rawLines: lines };
   }
 
   function slotLabel(slotName) {
@@ -949,7 +993,11 @@
     const buildNode = doc.querySelector("Build");
     const specNode = doc.querySelector("Tree Spec");
     const itemNodes = Array.from(doc.querySelectorAll("Items > Item"));
-    const itemMap = new Map(itemNodes.map((item) => [item.getAttribute("id"), parseItemText(item.textContent)]));
+    const itemEntries = itemNodes.map((item) => ({
+      id: item.getAttribute("id"),
+      item: parseItemText(item.textContent)
+    }));
+    const itemMap = new Map(itemEntries.map((entry) => [entry.id, entry.item]));
     const slots = Array.from(doc.querySelectorAll("ItemSet Slot"))
       .map((slot) => ({
         name: slot.getAttribute("name"),
@@ -957,6 +1005,7 @@
         item: itemMap.get(slot.getAttribute("itemId"))
       }))
       .filter((slot) => slot.item && slot.itemId !== "0");
+    const usedItemIds = new Set(slots.map((slot) => slot.itemId));
     const visualEquipment = slots.map((slot) => {
       const dbItem = itemByName(slot.item.name);
       return {
@@ -985,6 +1034,23 @@
     }));
     const passiveNodes = (specNode?.getAttribute("nodes") || "").split(",").filter(Boolean);
     const nodeCount = passiveNodes.length;
+    const socketNodes = passiveNodes
+      .map((id) => pobTree?.nodes?.[String(id)])
+      .filter((node) => node && (/socket/i.test(node.type || "") || /jewel socket/i.test(node.name || "")))
+      .map((node) => ({ id: node.id, name: node.name || "Jewel Socket", x: node.x, y: node.y }));
+    const visualTreeJewels = itemEntries
+      .filter((entry) => entry.id && !usedItemIds.has(entry.id) && isPassiveJewelItem(entry.item))
+      .map((entry, index) => ({
+        slot: "Passive Jewel",
+        slotLabel: socketNodes[index]?.name ? `${socketNodes[index].name} #${socketNodes[index].id}` : "天赋树珠宝",
+        itemId: entry.id,
+        socketNodeId: socketNodes[index]?.id || "",
+        name: entry.item.name,
+        base: entry.item.base,
+        rarity: entry.item.rarity.toUpperCase(),
+        mods: entry.item.mods,
+        icon: iconForImportedItem(entry.item.name, entry.item.base, "Jewel")
+      }));
     const className = buildNode?.getAttribute("className") || "待确认";
     const ascendancy = buildNode?.getAttribute("ascendClassName") || "待确认";
     const sourceLabel = source?.label || "PoB 导入";
@@ -1041,6 +1107,8 @@
         ascendancy,
         equipment: visualEquipment,
         uniques: visualEquipment.filter((entry) => entry.rarity === "UNIQUE"),
+        treeJewels: visualTreeJewels,
+        socketNodes,
         skillGroups: visualSkills,
         passiveNodes,
         nodeCount
@@ -1058,6 +1126,7 @@
         ascendancy,
         slots: slots.length,
         uniques: uniqueSlots.length,
+        treeJewels: visualTreeJewels.length,
         skills: skillGroups.length,
         nodeCount
       }
@@ -1094,6 +1163,7 @@
         <span>装备 ${result.summary.slots} 件，暗金 ${result.summary.uniques} 件，技能组 ${result.summary.skills} 组，天赋节点 ${result.summary.nodeCount} 个</span>
       </div>
       ${renderEquipmentBoard(meta.equipment)}
+      ${renderTreeJewels(meta.treeJewels, meta.socketNodes || [])}
       ${renderSkillGroups(meta.skillGroups)}
       ${renderPassiveNodeCloud(meta.passiveNodes, meta.nodeCount)}
     `;
@@ -1110,6 +1180,7 @@
           ascendancy: draft.importMeta.ascendancy || draft.ascendancy,
           slots: draft.importMeta.equipment?.length || 0,
           uniques: draft.importMeta.uniques?.length || 0,
+          treeJewels: draft.importMeta.treeJewels?.length || 0,
           skills: draft.importMeta.skillGroups?.length || 0,
           nodeCount: draft.importMeta.nodeCount || draft.importMeta.passiveNodes?.length || 0
         }
