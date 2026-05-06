@@ -7,7 +7,8 @@
   const pobImports = window.POB_IMPORTS || {};
   const pobTree = window.POB_TREE_0_4 || null;
   const pobAscendancies = window.POB_ASCENDANCIES || {};
-  let builds = [...baseBuilds, ...loadImportedDrafts()];
+  let hydratedBaseBuilds = baseBuilds.map(normalizeImportedBuild);
+  let builds = [...hydratedBaseBuilds, ...loadImportedDrafts()];
   let currentLang = localStorage.getItem("toolman.lang") || "zh";
   const englishText = {
     "工具人 BD 图鉴": "Support Build Atlas",
@@ -102,7 +103,7 @@
     const drafts = loadImportedDrafts().filter((item) => item.id !== build.id);
     drafts.unshift(build);
     localStorage.setItem("toolman.importedBuilds", JSON.stringify(drafts.slice(0, 20)));
-    builds = [...baseBuilds, ...drafts.slice(0, 20)];
+    builds = [...hydratedBaseBuilds, ...drafts.slice(0, 20)];
   }
 
   function valueByLooseName(map, name) {
@@ -155,6 +156,60 @@
       templateType: "poe-ninja-character",
       templateVersion: 1
     };
+  }
+
+  async function hydrateCachedPobBuilds() {
+    if (!("DecompressionStream" in window) || !Object.keys(pobImports).length) return;
+
+    const drafts = loadImportedDrafts();
+    const usedImportIds = new Set([
+      ...baseBuilds.map((build) => build.pobImportId).filter(Boolean),
+      ...drafts.map((build) => build.pobImportId).filter(Boolean)
+    ]);
+
+    const hydratedBase = await Promise.all(baseBuilds.map(async (build) => {
+      if (!build.pobImportId || build.importMeta || !pobImports[build.pobImportId]?.code) return normalizeImportedBuild(build);
+      try {
+        const xmlText = await decodePobCode(pobImports[build.pobImportId].code);
+        const result = summarizePobXml(xmlText, build.pobImportId);
+        return normalizeImportedBuild({
+          ...build,
+          importMeta: result.draft.importMeta,
+          className: build.className || result.draft.className,
+          ascendancy: build.ascendancy || result.draft.ascendancy,
+          portrait: build.portrait || result.draft.portrait
+        });
+      } catch (error) {
+        console.warn("PoB cache hydration failed:", build.pobImportId, error);
+        return normalizeImportedBuild(build);
+      }
+    }));
+
+    const generatedDrafts = [];
+    for (const [sourceId, pob] of Object.entries(pobImports)) {
+      if (usedImportIds.has(sourceId) || !pob?.code) continue;
+      try {
+        const xmlText = await decodePobCode(pob.code);
+        const result = summarizePobXml(xmlText, sourceId);
+        generatedDrafts.push(normalizeImportedBuild({
+          ...result.draft,
+          id: `cached-${sourceId}`,
+          pobImportId: sourceId,
+          templateType: "poe-ninja-cached-character"
+        }));
+      } catch (error) {
+        console.warn("PoB cached character import failed:", sourceId, error);
+      }
+    }
+
+    hydratedBaseBuilds = [...hydratedBase, ...generatedDrafts];
+    builds = [...hydratedBaseBuilds, ...drafts];
+    if (!builds.some((build) => build.id === state.selectedId)) {
+      state.selectedId = builds[0]?.id || "";
+    }
+    renderBuildCatalog();
+    renderDetail();
+    applyLanguage();
   }
 
   function applyLanguage() {
@@ -1562,4 +1617,5 @@
   renderChronicle();
   bindEvents();
   applyLanguage();
+  hydrateCachedPobBuilds();
 })();
