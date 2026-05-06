@@ -711,9 +711,11 @@
   function renderPassiveNodeCloud(passiveNodes, nodeCount) {
     if (!passiveNodes?.length && !nodeCount) return "";
     const treeMap = renderPassiveTreeMap(passiveNodes);
+    const passiveDetails = buildAllocatedPassiveDetails(passiveNodes);
     return `
       <div class="visual-subsection">
         <h4>天赋节点</h4>
+        ${renderPassiveInsightPanel(passiveDetails, nodeCount || passiveNodes.length)}
         ${treeMap || `
           <div class="passive-node-summary">
             <strong>${escapeHtml(nodeCount || passiveNodes.length)} 个节点</strong>
@@ -724,6 +726,119 @@
           </div>
         `}
       </div>
+    `;
+  }
+
+  function buildAllocatedPassiveDetails(passiveNodes) {
+    if (!pobTree || !passiveNodes?.length) return { nodes: [], coreNodes: [], statGroups: [], counts: {} };
+    const nodes = passiveNodes
+      .map((id) => pobTree.nodes[String(id)])
+      .filter((node) => node && node.type !== "OnlyImage");
+    const coreNodes = nodes
+      .filter((node) => ["Keystone", "Notable", "Ascendancy", "AscendancyStart", "Socket"].includes(node.type))
+      .sort((a, b) => passiveTypeWeight(a.type) - passiveTypeWeight(b.type) || String(a.name).localeCompare(String(b.name)));
+    const statGroups = groupPassiveStats(nodes);
+    return {
+      nodes,
+      coreNodes,
+      statGroups,
+      counts: {
+        total: nodes.length,
+        keystone: nodes.filter((node) => node.type === "Keystone").length,
+        notable: nodes.filter((node) => node.type === "Notable").length,
+        ascendancy: nodes.filter((node) => node.type === "Ascendancy" || node.type === "AscendancyStart").length,
+        socket: nodes.filter((node) => node.type === "Socket").length
+      }
+    };
+  }
+
+  function passiveTypeWeight(type) {
+    return { Keystone: 0, Ascendancy: 1, AscendancyStart: 1, Notable: 2, Socket: 3, Attribute: 4, Normal: 5 }[type] ?? 9;
+  }
+
+  function groupPassiveStats(nodes) {
+    const groups = new Map();
+    for (const node of nodes) {
+      for (const stat of node.stats || []) {
+        const category = passiveStatCategory(stat);
+        if (!groups.has(category)) groups.set(category, []);
+        groups.get(category).push({ stat, node });
+      }
+    }
+    const order = ["队伍/存在", "能量球/盛怒", "防御/护盾", "药剂/充能", "伤害/穿透", "召唤/诅咒", "属性/资源", "其他"];
+    return order
+      .map((name) => ({ name, entries: groups.get(name) || [] }))
+      .filter((group) => group.entries.length);
+  }
+
+  function passiveStatCategory(stat) {
+    const text = String(stat || "").toLowerCase();
+    if (/presence|allies|ally|aura|banner/.test(text)) return "队伍/存在";
+    if (/charge|rage|power|frenzy|endurance|volatility/.test(text)) return "能量球/盛怒";
+    if (/energy shield|armour|evasion|block|deflection|resistance|threshold|recoup|life regeneration|life per second|recharge|stun/.test(text)) return "防御/护盾";
+    if (/flask|charm/.test(text)) return "药剂/充能";
+    if (/damage|penetrates|critical|attack|spell|projectile|melee|ignite|shock|poison|bleeding|ailment/.test(text)) return "伤害/穿透";
+    if (/minion|curse|hex|offering|companion/.test(text)) return "召唤/诅咒";
+    if (/strength|dexterity|intelligence|attribute|mana|spirit|cost|requirements|maximum life/.test(text)) return "属性/资源";
+    return "其他";
+  }
+
+  function renderPassiveInsightPanel(details, requestedCount) {
+    if (!details.nodes.length) return "";
+    const counts = details.counts;
+    return `
+      <div class="passive-insight">
+        <div class="passive-insight-head">
+          <strong>已点天赋速读</strong>
+          <span>${counts.total}/${requestedCount} 个节点可读，${counts.keystone} 个关键天赋，${counts.notable} 个大点，${counts.ascendancy} 个升华点，${counts.socket} 个珠宝孔</span>
+        </div>
+        <div class="passive-core-grid">
+          ${details.coreNodes.slice(0, 24).map(renderPassiveCoreCard).join("")}
+        </div>
+        ${renderPassiveStatGroups(details.statGroups)}
+      </div>
+    `;
+  }
+
+  function renderPassiveCoreCard(node) {
+    const stats = node.stats || [];
+    return `
+      <article class="passive-core-card passive-core-${escapeHtml(node.type)}">
+        <small>${escapeHtml(passiveTypeLabel(node.type))}${node.ascendancyName ? ` · ${escapeHtml(node.ascendancyName)}` : ""}</small>
+        <strong>${escapeHtml(node.name || `Node ${node.id}`)}</strong>
+        ${stats.length ? `<ul>${stats.slice(0, 5).map((stat) => `<li>${escapeHtml(stat)}</li>`).join("")}</ul>` : `<p>珠宝孔或起点节点，无固定词条。</p>`}
+      </article>
+    `;
+  }
+
+  function passiveTypeLabel(type) {
+    return {
+      Keystone: "关键天赋",
+      Notable: "大点",
+      Ascendancy: "升华点",
+      AscendancyStart: "升华起点",
+      Socket: "珠宝孔",
+      Attribute: "属性点",
+      Normal: "小点"
+    }[type] || type || "天赋点";
+  }
+
+  function renderPassiveStatGroups(groups) {
+    if (!groups.length) return "";
+    return `
+      <details class="passive-stat-groups" open>
+        <summary>已点词条速查</summary>
+        <div class="passive-stat-columns">
+          ${groups.map((group) => `
+            <section>
+              <h5>${escapeHtml(group.name)}</h5>
+              <ul>
+                ${group.entries.slice(0, 36).map(({ stat, node }) => `<li><span>${escapeHtml(stat)}</span><small>${escapeHtml(node.name || node.id)}</small></li>`).join("")}
+              </ul>
+            </section>
+          `).join("")}
+        </div>
+      </details>
     `;
   }
 
@@ -843,11 +958,17 @@
     const radius = nodeRadius(node.type);
     const label = [node.name, ...(node.stats || [])].filter(Boolean).join("\n");
     return `
-      <g class="tree-node ${allocated ? "is-allocated" : "is-unallocated"} tree-node-${escapeHtml(node.type)}" transform="translate(${node.x} ${node.y})">
+      <g class="tree-node ${allocated ? "is-allocated" : "is-unallocated"} tree-node-${escapeHtml(node.type)}" transform="translate(${node.x} ${node.y})" tabindex="0">
         <circle r="${radius}"></circle>
+        ${allocated && (node.type === "Keystone" || node.type === "Notable" || node.type === "Ascendancy") ? `<text y="${radius + 55}" text-anchor="middle">${escapeHtml(truncateNodeLabel(node.name || node.id))}</text>` : ""}
         <title>${escapeHtml(label || String(node.id))}</title>
       </g>
     `;
+  }
+
+  function truncateNodeLabel(label) {
+    const text = String(label || "");
+    return text.length > 18 ? `${text.slice(0, 17)}…` : text;
   }
 
   function nodeRadius(type) {
