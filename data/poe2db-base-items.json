@@ -6,7 +6,7 @@
     "cnName": "丰裕手套 FourGlovesInt4Endgame /8",
     "sourceUrl": "https://poe2db.tw/cn/Opulent_Gloves",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Gloves/Basetypes/GlovesInt04.webp",
-    "crawledAt": "2026-05-05T20:13:38.715Z",
+    "crawledAt": "2026-05-06T14:07:46.068Z",
     "localIcon": "./assets/poe2db-base-icons/opulent-gloves.webp"
   },
   {
@@ -16,7 +16,7 @@
     "cnName": "预兆短杖 FourSceptre4 /8",
     "sourceUrl": "https://poe2db.tw/cn/Omen_Sceptre",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Weapons/OneHandWeapons/Scepters/Basetypes/Sceptre04.webp",
-    "crawledAt": "2026-05-05T20:13:39.701Z",
+    "crawledAt": "2026-05-06T14:07:46.446Z",
     "localIcon": "./assets/poe2db-base-icons/omen-sceptre.webp"
   },
   {
@@ -26,7 +26,7 @@
     "cnName": "次级生命药剂 FourFlaskLife1 /8",
     "sourceUrl": "https://poe2db.tw/cn/Lesser_Life_Flask",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Flasks/Basetypes/FlaskLife01.webp",
-    "crawledAt": "2026-05-05T20:13:40.250Z",
+    "crawledAt": "2026-05-06T14:07:47.228Z",
     "localIcon": "./assets/poe2db-base-icons/lesser-life-flask.webp"
   },
   {
@@ -36,7 +36,7 @@
     "cnName": "日曜护身符 FourAmulet9 /8",
     "sourceUrl": "https://poe2db.tw/cn/Solar_Amulet",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Amulets/Basetypes/SolarAmulet.webp",
-    "crawledAt": "2026-05-05T20:13:40.810Z",
+    "crawledAt": "2026-05-06T14:07:47.605Z",
     "localIcon": "./assets/poe2db-base-icons/solar-amulet.webp"
   },
   {
@@ -46,7 +46,7 @@
     "cnName": "次级魔力药剂 FourFlaskMana1 /8",
     "sourceUrl": "https://poe2db.tw/cn/Lesser_Mana_Flask",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Flasks/Basetypes/FlaskMana01.webp",
-    "crawledAt": "2026-05-05T20:13:41.376Z",
+    "crawledAt": "2026-05-06T14:07:47.978Z",
     "localIcon": "./assets/poe2db-base-icons/lesser-mana-flask.webp"
   },
   {
@@ -56,7 +56,7 @@
     "cnName": "塔萨里奥法器 FourFocus10Endgame /8",
     "sourceUrl": "https://poe2db.tw/cn/Tasalian_Focus",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Offhand/Foci/Basetypes/Focus10.webp",
-    "crawledAt": "2026-05-05T20:13:41.932Z",
+    "crawledAt": "2026-05-06T14:07:48.350Z",
     "localIcon": "./assets/poe2db-base-icons/tasalian-focus.webp"
   },
   {
@@ -66,7 +66,7 @@
     "cnName": "丝克玛便鞋 FourBootsInt6Endgame /8",
     "sourceUrl": "https://poe2db.tw/cn/Sekhema_Sandals",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Boots/Basetypes/BootsInt06.webp",
-    "crawledAt": "2026-05-05T20:13:42.495Z",
+    "crawledAt": "2026-05-06T14:07:48.721Z",
     "localIcon": "./assets/poe2db-base-icons/sekhema-sandals.webp"
   },
   {
@@ -76,7 +76,7 @@
     "cnName": "先祖冠冕 FourHelmetInt8Endgame /8",
     "sourceUrl": "https://poe2db.tw/cn/Ancestral_Tiara",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Helmets/Basetypes/HelmetInt08.webp",
-    "crawledAt": "2026-05-05T20:13:43.438Z",
+    "crawledAt": "2026-05-06T14:07:49.101Z",
     "localIcon": "./assets/poe2db-base-icons/ancestral-tiara.webp"
   },
   {
@@ -86,7 +86,7 @@
     "cnName": "珠玉戒指 FourRing8 /8",
     "sourceUrl": "https://poe2db.tw/cn/Pearl_Ring",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Rings/Basetypes/PearlRing.webp",
-    "crawledAt": "2026-05-05T20:13:43.993Z",
+    "crawledAt": "2026-05-06T14:07:49.480Z",
     "localIcon": "./assets/poe2db-base-icons/pearl-ring.webp"
   },
   {
@@ -96,7 +96,7 @@
     "cnName": "精致腰带 FourBelt11 /8",
     "sourceUrl": "https://poe2db.tw/cn/Fine_Belt",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Belts/Basetypes/Belt11.webp",
-    "crawledAt": "2026-05-05T20:13:44.547Z",
+    "crawledAt": "2026-05-06T14:07:49.851Z",
     "localIcon": "./assets/poe2db-base-icons/fine-belt.webp"
   },
   {
@@ -106,97 +106,237 @@
     "cnName": "冠军胸甲 FourBodyStr12 /8",
     "sourceUrl": "https://poe2db.tw/cn/Champion_Cuirass",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/BodyArmours/Basetypes/BodyStr01.webp",
-    "crawledAt": "2026-05-05T20:13:45.114Z",
+    "crawledAt": "2026-05-06T14:07:50.238Z",
     "localIcon": "./assets/poe2db-base-icons/champion-cuirass.webp"
+  },
+  {
+    "id": "utility-belt",
+    "slug": "Utility_Belt",
+    "name": "Utility Belt",
+    "cnName": "万用腰带 FourBelt10 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Utility_Belt",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Belts/Basetypes/Belt10.webp",
+    "crawledAt": "2026-05-06T14:07:50.616Z",
+    "localIcon": "./assets/poe2db-base-icons/utility-belt.webp"
+  },
+  {
+    "id": "tribal-mask",
+    "slug": "Tribal_Mask",
+    "name": "Tribal Mask",
+    "cnName": "部族之面 FourHelmetDexInt5 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Tribal_Mask",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Helmets/Basetypes/HelmetDexInt05.webp",
+    "crawledAt": "2026-05-06T14:07:50.990Z",
+    "localIcon": "./assets/poe2db-base-icons/tribal-mask.webp"
+  },
+  {
+    "id": "sirenscale-gloves",
+    "slug": "Sirenscale_Gloves",
+    "name": "Sirenscale Gloves",
+    "cnName": "海妖之鳞手套 FourGlovesInt6Endgame /8",
+    "sourceUrl": "https://poe2db.tw/cn/Sirenscale_Gloves",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Gloves/Basetypes/GlovesInt06.webp",
+    "crawledAt": "2026-05-06T14:07:51.378Z",
+    "localIcon": "./assets/poe2db-base-icons/sirenscale-gloves.webp"
+  },
+  {
+    "id": "ring",
+    "slug": "Ring",
+    "name": "Ring",
+    "cnName": "戒指 FourRingBase /8",
+    "sourceUrl": "https://poe2db.tw/cn/Ring",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Rings/MirrorRing.webp",
+    "crawledAt": "2026-05-06T14:07:51.748Z",
+    "localIcon": "./assets/poe2db-base-icons/ring.webp"
+  },
+  {
+    "id": "ashbark-talisman",
+    "slug": "Ashbark_Talisman",
+    "name": "Ashbark Talisman",
+    "cnName": "灰烬树皮魔符 Talisman3Endgame /9",
+    "sourceUrl": "https://poe2db.tw/cn/Ashbark_Talisman",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Offhand/Talismans/CinderbarkTalisman.webp",
+    "crawledAt": "2026-05-06T14:07:52.127Z",
+    "localIcon": "./assets/poe2db-base-icons/ashbark-talisman.webp"
+  },
+  {
+    "id": "sacrificial-regalia",
+    "slug": "Sacrificial_Regalia",
+    "name": "Sacrificial Regalia",
+    "cnName": "献祭盛装 FourBodyStrDexInt2 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Sacrificial_Regalia",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/BodyArmours/Basetypes/BodyStrDexInt02.webp",
+    "crawledAt": "2026-05-06T14:07:52.500Z",
+    "localIcon": "./assets/poe2db-base-icons/sacrificial-regalia.webp"
+  },
+  {
+    "id": "grand-regalia",
+    "slug": "Grand_Regalia",
+    "name": "Grand Regalia",
+    "cnName": "恢弘盛装 FourBodyStrDexInt1 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Grand_Regalia",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/BodyArmours/Basetypes/BodyStr01.webp",
+    "crawledAt": "2026-05-06T14:07:52.873Z",
+    "localIcon": "./assets/poe2db-base-icons/grand-regalia.webp"
+  },
+  {
+    "id": "lapis-amulet",
+    "slug": "Lapis_Amulet",
+    "name": "Lapis Amulet",
+    "cnName": "海玉护身符 FourAmulet5 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Lapis_Amulet",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Amulets/Basetypes/LapisAmulet.webp",
+    "crawledAt": "2026-05-06T14:07:53.251Z",
+    "localIcon": "./assets/poe2db-base-icons/lapis-amulet.webp"
+  },
+  {
+    "id": "luxurious-slippers",
+    "slug": "Luxurious_Slippers",
+    "name": "Luxurious Slippers",
+    "cnName": "奢华便鞋 FourBootsInt4Endgame /8",
+    "sourceUrl": "https://poe2db.tw/cn/Luxurious_Slippers",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/Boots/Basetypes/BootsInt04.webp",
+    "crawledAt": "2026-05-06T14:07:53.621Z",
+    "localIcon": "./assets/poe2db-base-icons/luxurious-slippers.webp"
+  },
+  {
+    "id": "shrine-sceptre",
+    "slug": "Shrine_Sceptre",
+    "name": "Shrine Sceptre",
+    "cnName": "圣地短杖 FourSceptre6a /8",
+    "sourceUrl": "https://poe2db.tw/cn/Shrine_Sceptre",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Weapons/OneHandWeapons/Scepters/Basetypes/Sceptre06c.webp",
+    "crawledAt": "2026-05-06T14:07:54.001Z",
+    "localIcon": "./assets/poe2db-base-icons/shrine-sceptre.webp"
+  },
+  {
+    "id": "breach-ring",
+    "slug": "Breach_Ring",
+    "name": "Breach Ring",
+    "cnName": "裂隙戒指 FourRingBreach /8",
+    "sourceUrl": "https://poe2db.tw/cn/Breach_Ring",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Rings/Basetypes/BreachRing.webp",
+    "crawledAt": "2026-05-06T14:07:54.380Z",
+    "localIcon": "./assets/poe2db-base-icons/breach-ring.webp"
+  },
+  {
+    "id": "ultimate-mana-flask",
+    "slug": "Ultimate_Mana_Flask",
+    "name": "Ultimate Mana Flask",
+    "cnName": "终极魔力药剂 FourFlaskMana9 /8",
+    "sourceUrl": "https://poe2db.tw/cn/Ultimate_Mana_Flask",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Flasks/Basetypes/FlaskMana09.webp",
+    "crawledAt": "2026-05-06T14:07:54.761Z",
+    "localIcon": "./assets/poe2db-base-icons/ultimate-mana-flask.webp"
+  },
+  {
+    "id": "grounding-charm",
+    "slug": "Grounding_Charm",
+    "name": "Grounding Charm",
+    "cnName": "Attribute /3",
+    "sourceUrl": "https://poe2db.tw/cn/Grounding_Charm",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Charms/Basetypes/GroundingCharm.webp",
+    "crawledAt": "2026-05-06T14:07:55.148Z",
+    "localIcon": "./assets/poe2db-base-icons/grounding-charm.webp"
+  },
+  {
+    "id": "thawing-charm",
+    "slug": "Thawing_Charm",
+    "name": "Thawing Charm",
+    "cnName": "Attribute /3",
+    "sourceUrl": "https://poe2db.tw/cn/Thawing_Charm",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Charms/Basetypes/ThawingCharm.webp",
+    "crawledAt": "2026-05-06T14:07:55.529Z",
+    "localIcon": "./assets/poe2db-base-icons/thawing-charm.webp"
   },
   {
     "id": "ruby",
     "slug": "Ruby",
     "name": "Ruby",
-    "cnName": "红玉",
+    "cnName": "{{{ baseitem.link_name }}}",
     "sourceUrl": "https://poe2db.tw/cn/Ruby",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/RubyJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-ruby.webp"
+    "crawledAt": "2026-05-06T14:07:56.118Z",
+    "localIcon": "./assets/poe2db-base-icons/ruby.webp"
   },
   {
     "id": "emerald",
     "slug": "Emerald",
     "name": "Emerald",
-    "cnName": "翠玉",
+    "cnName": "{{{ baseitem.link_name }}}",
     "sourceUrl": "https://poe2db.tw/cn/Emerald",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/EmeraldJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-emerald.webp"
+    "crawledAt": "2026-05-06T14:07:56.714Z",
+    "localIcon": "./assets/poe2db-base-icons/emerald.webp"
   },
   {
     "id": "sapphire",
     "slug": "Sapphire",
     "name": "Sapphire",
-    "cnName": "蓝宝石",
+    "cnName": "{{{ baseitem.link_name }}}",
     "sourceUrl": "https://poe2db.tw/cn/Sapphire",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SapphireJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-sapphire.webp"
+    "crawledAt": "2026-05-06T14:07:57.294Z",
+    "localIcon": "./assets/poe2db-base-icons/sapphire.webp"
   },
   {
     "id": "diamond",
     "slug": "Diamond",
     "name": "Diamond",
-    "cnName": "宝钻",
+    "cnName": "宝钻 JewelDiamond /8",
     "sourceUrl": "https://poe2db.tw/cn/Diamond",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SapphireJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-sapphire.webp"
+    "crawledAt": "2026-05-06T14:07:57.673Z",
+    "localIcon": "./assets/poe2db-base-icons/diamond.webp"
   },
   {
     "id": "time-lost-ruby",
     "slug": "Time-Lost_Ruby",
     "name": "Time-Lost Ruby",
-    "cnName": "失落的红玉",
+    "cnName": "{{{ baseitem.link_name }}}",
     "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Ruby",
-    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialRubyJewel.webp",
+    "crawledAt": "2026-05-06T14:07:58.247Z",
+    "localIcon": "./assets/poe2db-base-icons/time-lost-ruby.webp"
   },
   {
     "id": "time-lost-emerald",
     "slug": "Time-Lost_Emerald",
     "name": "Time-Lost Emerald",
-    "cnName": "失落的翠玉",
+    "cnName": "{{{ baseitem.link_name }}}",
     "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Emerald",
-    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialEmeraldJewel.webp",
+    "crawledAt": "2026-05-06T14:07:58.821Z",
+    "localIcon": "./assets/poe2db-base-icons/time-lost-emerald.webp"
   },
   {
     "id": "time-lost-sapphire",
     "slug": "Time-Lost_Sapphire",
     "name": "Time-Lost Sapphire",
-    "cnName": "失落的蓝宝石",
+    "cnName": "{{{ baseitem.link_name }}}",
     "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Sapphire",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+    "crawledAt": "2026-05-06T14:07:59.410Z",
+    "localIcon": "./assets/poe2db-base-icons/time-lost-sapphire.webp"
   },
   {
     "id": "time-lost-diamond",
     "slug": "Time-Lost_Diamond",
     "name": "Time-Lost Diamond",
-    "cnName": "失落的宝钻",
+    "cnName": "失落的宝钻 JewelRadiusDiamond /8",
     "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Diamond",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+    "crawledAt": "2026-05-06T14:07:59.773Z",
+    "localIcon": "./assets/poe2db-base-icons/time-lost-diamond.webp"
   },
   {
     "id": "timeless-jewel",
     "slug": "Timeless_Jewel",
     "name": "Timeless Jewel",
-    "cnName": "永恒珠宝",
+    "cnName": "Alternate Passive /2",
     "sourceUrl": "https://poe2db.tw/cn/Timeless_Jewel",
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/Timeless.webp",
-    "crawledAt": "2026-05-06T00:00:00.000Z",
-    "localIcon": "./assets/poe2db-icons/jewel-timeless.webp"
+    "crawledAt": "2026-05-06T14:08:00.162Z",
+    "localIcon": "./assets/poe2db-base-icons/timeless-jewel.webp"
   }
 ]

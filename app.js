@@ -265,11 +265,16 @@
   function skillByName(name) {
     const key = normalizeSkillName(name);
     if (!key) return null;
-    return poe2Skills.find((skill) => (
+    const exact = poe2Skills.find((skill) => (
       normalizeSkillName(skill.name) === key ||
       normalizeSkillName(skill.cnName) === key ||
       normalizeSkillName(skill.slug) === key
-    )) || null;
+    ));
+    if (exact) return exact;
+    if (/^companion\s*:/.test(String(name || "").toLowerCase())) {
+      return poe2Skills.find((skill) => normalizeSkillName(skill.name) === normalizeSkillName("Companion: {0}")) || null;
+    }
+    return null;
   }
 
   function normalizeSkillName(name) {
@@ -312,7 +317,16 @@
 
   function displayName(entry, fallback = "") {
     if (!entry) return fallback;
-    return currentLang === "en" ? (entry.name || fallback) : (entry.cnName || entry.name || fallback);
+    if (currentLang === "en") return entry.name || fallback;
+    const candidate = entry.cnName || entry.name || fallback;
+    if (/^Attribute\s*\/\d+$/i.test(candidate)) return entry.name || fallback;
+    return cleanDisplayName(candidate);
+  }
+
+  function cleanDisplayName(value) {
+    return String(value || "")
+      .replace(/\s+Four[A-Za-z0-9]+\s*\/\d+\s*$/i, "")
+      .trim();
   }
 
   function displayEquipmentName(entry) {
@@ -335,6 +349,7 @@
 
   function displaySkillName(name) {
     const dbSkill = skillByName(name);
+    if (/^companion\s*:/.test(String(name || "").toLowerCase())) return name;
     return displayName(dbSkill, name);
   }
 
