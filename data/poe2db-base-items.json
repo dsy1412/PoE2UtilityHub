@@ -108,5 +108,95 @@
     "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Armours/BodyArmours/Basetypes/BodyStr01.webp",
     "crawledAt": "2026-05-05T20:13:45.114Z",
     "localIcon": "./assets/poe2db-base-icons/champion-cuirass.webp"
+  },
+  {
+    "id": "ruby",
+    "slug": "Ruby",
+    "name": "Ruby",
+    "cnName": "红玉",
+    "sourceUrl": "https://poe2db.tw/cn/Ruby",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/RubyJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-ruby.webp"
+  },
+  {
+    "id": "emerald",
+    "slug": "Emerald",
+    "name": "Emerald",
+    "cnName": "翠玉",
+    "sourceUrl": "https://poe2db.tw/cn/Emerald",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/EmeraldJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-emerald.webp"
+  },
+  {
+    "id": "sapphire",
+    "slug": "Sapphire",
+    "name": "Sapphire",
+    "cnName": "蓝宝石",
+    "sourceUrl": "https://poe2db.tw/cn/Sapphire",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SapphireJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-sapphire.webp"
+  },
+  {
+    "id": "diamond",
+    "slug": "Diamond",
+    "name": "Diamond",
+    "cnName": "宝钻",
+    "sourceUrl": "https://poe2db.tw/cn/Diamond",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SapphireJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-sapphire.webp"
+  },
+  {
+    "id": "time-lost-ruby",
+    "slug": "Time-Lost_Ruby",
+    "name": "Time-Lost Ruby",
+    "cnName": "失落的红玉",
+    "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Ruby",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+  },
+  {
+    "id": "time-lost-emerald",
+    "slug": "Time-Lost_Emerald",
+    "name": "Time-Lost Emerald",
+    "cnName": "失落的翠玉",
+    "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Emerald",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+  },
+  {
+    "id": "time-lost-sapphire",
+    "slug": "Time-Lost_Sapphire",
+    "name": "Time-Lost Sapphire",
+    "cnName": "失落的蓝宝石",
+    "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Sapphire",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+  },
+  {
+    "id": "time-lost-diamond",
+    "slug": "Time-Lost_Diamond",
+    "name": "Time-Lost Diamond",
+    "cnName": "失落的宝钻",
+    "sourceUrl": "https://poe2db.tw/cn/Time-Lost_Diamond",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/SpecialSapphireJewel.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-special-sapphire.webp"
+  },
+  {
+    "id": "timeless-jewel",
+    "slug": "Timeless_Jewel",
+    "name": "Timeless Jewel",
+    "cnName": "永恒珠宝",
+    "sourceUrl": "https://poe2db.tw/cn/Timeless_Jewel",
+    "icon": "https://cdn.poe2db.tw/image/Art/2DItems/Jewels/Timeless.webp",
+    "crawledAt": "2026-05-06T00:00:00.000Z",
+    "localIcon": "./assets/poe2db-icons/jewel-timeless.webp"
   }
 ]

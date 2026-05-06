@@ -286,8 +286,23 @@
     return dbItem?.localIcon || dbItem?.icon || "";
   }
 
+  function jewelBaseIconForName(name, base, slot) {
+    const text = `${slot || ""} ${base || ""} ${name || ""}`.toLowerCase();
+    if (!/jewel|ruby|emerald|sapphire|diamond|time-lost|timeless/.test(text)) return "";
+    if (/timeless/.test(text)) return "./assets/poe2db-icons/jewel-timeless.webp";
+    if (/time-lost|失落|時迭|時空|タイムロスト/.test(text)) return "./assets/poe2db-icons/jewel-special-sapphire.webp";
+    if (/ruby|红玉|紅玉/.test(text)) return "./assets/poe2db-icons/jewel-ruby.webp";
+    if (/emerald|翠玉|綠寶石/.test(text)) return "./assets/poe2db-icons/jewel-emerald.webp";
+    if (/sapphire|diamond|蓝宝石|藍寶石|宝钻|寶鑽|钻石|鑽石/.test(text)) return "./assets/poe2db-icons/jewel-sapphire.webp";
+    return "";
+  }
+
   function iconForImportedItem(name, base, slot) {
-    return itemIconForName(name) || baseIconForName(base) || baseIconForName(name) || fallbackItemIcon(slot, base || name);
+    return itemIconForName(name)
+      || baseIconForName(base)
+      || baseIconForName(name)
+      || jewelBaseIconForName(name, base, slot)
+      || fallbackItemIcon(slot, base || name);
   }
 
   function isPassiveJewelItem(item) {
