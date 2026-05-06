@@ -802,6 +802,46 @@ h1 {
   font-size: 12px;
 }
 
+.practical-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 12px 0 4px;
+}
+
+.practical-card {
+  min-height: 136px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(29, 22, 16, .92), rgba(8, 7, 5, .95));
+  border: 1px solid rgba(215, 168, 78, .24);
+  border-radius: 5px;
+}
+
+.practical-card small {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+}
+
+.practical-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--gold-2);
+  font-size: 16px;
+}
+
+.practical-card p,
+.practical-card ul {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.practical-card ul {
+  padding-left: 18px;
+}
+
 .visual-subsection {
   display: grid;
   gap: 10px;

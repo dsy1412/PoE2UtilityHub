@@ -358,6 +358,14 @@
     return dbSkill?.localIcon || dbSkill?.icon || "";
   }
 
+  function fallbackSkillIconForName(name, isSupport = false) {
+    const text = String(name || "").toLowerCase();
+    if (isSupport || /support|brain|desire|tithe|lust|passion|omen|requital/.test(text)) {
+      return "./assets/icons/icon_support_gem.svg";
+    }
+    return "./assets/icons/icon_skill_gem.svg";
+  }
+
   function itemDbIdForName(name) {
     return itemByName(name)?.id || "";
   }
@@ -534,12 +542,77 @@
           <span>技能组 ${skills.length} 组</span>
           <span>天赋节点 ${meta.nodeCount || passiveNodes.length} 个</span>
         </div>
+        ${renderImportPracticalPanel(meta)}
         ${renderEquipmentBoard(equipment)}
         ${renderTreeJewels(treeJewels, meta.socketNodes || [])}
         ${renderSkillGroups(skills)}
         ${renderPassiveNodeCloud(passiveNodes, meta.nodeCount)}
       </section>
     `;
+  }
+
+  function renderImportPracticalPanel(meta) {
+    const diagnostics = meta.importDiagnostics || buildImportDiagnostics(meta);
+    const boundCandidates = diagnostics.boundCandidates || [];
+    const missingEquipment = diagnostics.missingEquipmentIcons || [];
+    const missingSkills = diagnostics.missingSkillIcons || [];
+    const coreSkills = diagnostics.coreSkills || [];
+    return `
+      <div class="practical-panel">
+        <div class="practical-card">
+          <small>建议先确认</small>
+          <strong>绑定项候选</strong>
+          ${boundCandidates.length
+            ? `<ul>${boundCandidates.slice(0, 8).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+            : `<p>没有明显暗金绑定项；先按队伍收益筛装备，而不是照搬整套 PoB。</p>`}
+        </div>
+        <div class="practical-card">
+          <small>导入后要补</small>
+          <strong>实战说明</strong>
+          <ul>
+            <li>这个工具人给队友提供什么：增伤、防御、球、诅咒、回复或承伤。</li>
+            <li>开场/常驻/手动补救循环，以及断循环时怎么恢复。</li>
+            <li>哪些装备是绑定项，哪些只是当前角色配装。</li>
+          </ul>
+        </div>
+        <div class="practical-card">
+          <small>资源检查</small>
+          <strong>${missingEquipment.length || missingSkills.length ? "仍有缺图" : "图片已命中"}</strong>
+          ${missingEquipment.length || missingSkills.length
+            ? `<ul>
+                ${missingEquipment.slice(0, 5).map((item) => `<li>装备：${escapeHtml(item)}</li>`).join("")}
+                ${missingSkills.slice(0, 5).map((item) => `<li>技能：${escapeHtml(item)}</li>`).join("")}
+              </ul>`
+            : `<p>装备/底子/技能图标都能从本地缓存或 PoE2DB 映射找到。</p>`}
+        </div>
+        <div class="practical-card">
+          <small>先看技能</small>
+          <strong>主技能组</strong>
+          ${coreSkills.length
+            ? `<ul>${coreSkills.slice(0, 6).map((item) => `<li>${escapeHtml(displaySkillName(item))}</li>`).join("")}</ul>`
+            : `<p>没有读取到技能组；优先检查 PoB code 是否完整。</p>`}
+        </div>
+      </div>
+    `;
+  }
+
+  function buildImportDiagnostics(meta) {
+    const equipment = meta.equipment || [];
+    const skills = meta.skillGroups || [];
+    return {
+      boundCandidates: equipment
+        .filter((entry) => entry.rarity === "UNIQUE" || itemByName(entry.name))
+        .map((entry) => `${entry.slotLabel || entry.slot}: ${displayEquipmentName(entry)}`),
+      missingEquipmentIcons: equipment
+        .filter((entry) => !hasTrueImportedItemIcon(entry.name, entry.base, entry.slot))
+        .map((entry) => `${entry.slotLabel || entry.slot}: ${entry.name} / ${entry.base || "Unknown base"}`),
+      missingSkillIcons: [...new Set(skills.flatMap((group) => group.gems || []).filter((gem) => !skillIconForName(gem)))],
+      coreSkills: skills.map((group) => group.main || group.gems?.[0]).filter(Boolean)
+    };
+  }
+
+  function hasTrueImportedItemIcon(name, base, slot) {
+    return Boolean(itemIconForName(name) || baseIconForName(base) || baseIconForName(name) || jewelBaseIconForName(name, base, slot));
   }
 
   function renderEquipmentBoard(equipment) {
@@ -613,11 +686,11 @@
 
   function renderSkillCard(group) {
     const main = group.main || group.gems?.[0] || "Skill";
-    const mainIcon = skillIconForName(main);
+    const mainIcon = skillIconForName(main) || fallbackSkillIconForName(main);
     return `
       <article class="skill-card">
         <div class="skill-card-head">
-          <span class="skill-icon ${mainIcon ? "" : "is-empty"}">${mainIcon ? `<img src="${escapeHtml(mainIcon)}" alt="">` : escapeHtml(displaySkillName(main).slice(0, 2))}</span>
+          <span class="skill-icon"><img src="${escapeHtml(mainIcon)}" alt=""></span>
           <strong>${escapeHtml(displaySkillName(main))}</strong>
         </div>
         <div class="gem-list">${(group.gems || []).map((gem, index) => renderGemPill(gem, index === 0)).join("")}</div>
@@ -626,10 +699,10 @@
   }
 
   function renderGemPill(gem, isMain) {
-    const icon = skillIconForName(gem);
+    const icon = skillIconForName(gem) || fallbackSkillIconForName(gem, !isMain);
     return `
       <span class="gem-pill ${isMain ? "is-main" : ""}">
-        ${icon ? `<img src="${escapeHtml(icon)}" alt="">` : ""}
+        <img src="${escapeHtml(icon)}" alt="">
         ${escapeHtml(displaySkillName(gem))}
       </span>
     `;
@@ -1081,6 +1154,16 @@
         mods: entry.item.mods,
         icon: iconForImportedItem(entry.item.name, entry.item.base, "Jewel")
       }));
+    const importDiagnostics = {
+      boundCandidates: visualEquipment
+        .filter((entry) => entry.rarity === "UNIQUE" || itemByName(entry.name))
+        .map((entry) => `${entry.slotLabel || entry.slot}: ${displayEquipmentName(entry)}`),
+      missingEquipmentIcons: visualEquipment
+        .filter((entry) => !hasTrueImportedItemIcon(entry.name, entry.base, entry.slot))
+        .map((entry) => `${entry.slotLabel || entry.slot}: ${entry.name} / ${entry.base || "Unknown base"}`),
+      missingSkillIcons: [...new Set(visualSkills.flatMap((group) => group.gems || []).filter((gem) => !skillIconForName(gem)))],
+      coreSkills: visualSkills.map((group) => group.main || group.gems?.[0]).filter(Boolean)
+    };
     const className = buildNode?.getAttribute("className") || "待确认";
     const ascendancy = buildNode?.getAttribute("ascendClassName") || "待确认";
     const sourceLabel = source?.label || "PoB 导入";
@@ -1141,7 +1224,8 @@
         socketNodes,
         skillGroups: visualSkills,
         passiveNodes,
-        nodeCount
+        nodeCount,
+        importDiagnostics
       },
       warnings: [
         "这是自动草稿，只能保证 PoB 结构已读取；BD 功能、优先级和版本解释需要人工复核。",
@@ -1192,6 +1276,7 @@
         <span>${escapeHtml(result.summary.className)} / ${escapeHtml(result.summary.ascendancy)}</span>
         <span>装备 ${result.summary.slots} 件，暗金 ${result.summary.uniques} 件，技能组 ${result.summary.skills} 组，天赋节点 ${result.summary.nodeCount} 个</span>
       </div>
+      ${renderImportPracticalPanel(meta)}
       ${renderEquipmentBoard(meta.equipment)}
       ${renderTreeJewels(meta.treeJewels, meta.socketNodes || [])}
       ${renderSkillGroups(meta.skillGroups)}

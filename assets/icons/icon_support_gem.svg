@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Support gem">
+  <rect width="64" height="64" rx="8" fill="#050403"/>
+  <path d="M32 4 54 17v30L32 60 10 47V17Z" fill="#1b2415" stroke="#d7a84e" stroke-width="3"/>
+  <path d="M32 11 46 21v21L32 52 18 42V21Z" fill="#8fbf6a"/>
+  <path d="M32 11v41M18 21l14 31 14-31" fill="none" stroke="#fff3a6" stroke-width="2" opacity=".7"/>
+  <circle cx="32" cy="31" r="9" fill="#fff3a6" opacity=".4"/>
+</svg>

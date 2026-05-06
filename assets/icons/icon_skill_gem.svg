@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Skill gem">
+  <rect width="64" height="64" rx="8" fill="#050403"/>
+  <path d="M32 5 53 18v27L32 59 11 45V18Z" fill="#14394a" stroke="#d7a84e" stroke-width="3"/>
+  <path d="M32 10 47 20v22L32 53 17 42V20Z" fill="#6aa6bf"/>
+  <path d="M32 10v43M17 20l15 33 15-33" fill="none" stroke="#e9d59a" stroke-width="2" opacity=".65"/>
+  <path d="M22 23h20l-10 21Z" fill="#dff7ff" opacity=".35"/>
+</svg>
