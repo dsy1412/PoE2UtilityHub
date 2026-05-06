@@ -1,0 +1,272 @@
+window.POB_ASCENDANCIES = {
+  "treeVersion": "0_4",
+  "source": "Path of Building Community (PoE2)/TreeData/0_4/tree.json",
+  "atlas": "Path of Building Community (PoE2)/TreeData/0_4/ascendancy-background_1500_1500_BC7.dds.zst",
+  "maxSize": 512,
+  "assets": {
+    "ClassesAcolyte of Chayula": {
+      "asset": "ClassesAcolyte of Chayula",
+      "name": "Acolyte of Chayula",
+      "slug": "acolyte-of-chayula",
+      "image": "./assets/ascendancies/acolyte-of-chayula.webp",
+      "sourceIndex": 1
+    },
+    "ClassesAmazon": {
+      "asset": "ClassesAmazon",
+      "name": "Amazon",
+      "slug": "amazon",
+      "image": "./assets/ascendancies/amazon.webp",
+      "sourceIndex": 2
+    },
+    "ClassesBlood Mage": {
+      "asset": "ClassesBlood Mage",
+      "name": "Blood Mage",
+      "slug": "blood-mage",
+      "image": "./assets/ascendancies/blood-mage.webp",
+      "sourceIndex": 3
+    },
+    "ClassesChronomancer": {
+      "asset": "ClassesChronomancer",
+      "name": "Chronomancer",
+      "slug": "chronomancer",
+      "image": "./assets/ascendancies/chronomancer.webp",
+      "sourceIndex": 4
+    },
+    "ClassesDeadeye": {
+      "asset": "ClassesDeadeye",
+      "name": "Deadeye",
+      "slug": "deadeye",
+      "image": "./assets/ascendancies/deadeye.webp",
+      "sourceIndex": 5
+    },
+    "ClassesDisciple of Varashta": {
+      "asset": "ClassesDisciple of Varashta",
+      "name": "Disciple of Varashta",
+      "slug": "disciple-of-varashta",
+      "image": "./assets/ascendancies/disciple-of-varashta.webp",
+      "sourceIndex": 6
+    },
+    "ClassesDruid": {
+      "asset": "ClassesDruid",
+      "name": "Druid",
+      "slug": "druid",
+      "image": "./assets/ascendancies/druid.webp",
+      "sourceIndex": 7
+    },
+    "ClassesDuelist": {
+      "asset": "ClassesDuelist",
+      "name": "Duelist",
+      "slug": "duelist",
+      "image": "./assets/ascendancies/duelist.webp",
+      "sourceIndex": 8
+    },
+    "ClassesGemling Legionnaire": {
+      "asset": "ClassesGemling Legionnaire",
+      "name": "Gemling Legionnaire",
+      "slug": "gemling-legionnaire",
+      "image": "./assets/ascendancies/gemling-legionnaire.webp",
+      "sourceIndex": 9
+    },
+    "ClassesHuntress": {
+      "asset": "ClassesHuntress",
+      "name": "Huntress",
+      "slug": "huntress",
+      "image": "./assets/ascendancies/huntress.webp",
+      "sourceIndex": 10
+    },
+    "ClassesInfernalist": {
+      "asset": "ClassesInfernalist",
+      "name": "Infernalist",
+      "slug": "infernalist",
+      "image": "./assets/ascendancies/infernalist.webp",
+      "sourceIndex": 11
+    },
+    "ClassesInvoker": {
+      "asset": "ClassesInvoker",
+      "name": "Invoker",
+      "slug": "invoker",
+      "image": "./assets/ascendancies/invoker.webp",
+      "sourceIndex": 12
+    },
+    "ClassesAbyssal Lich": {
+      "asset": "ClassesAbyssal Lich",
+      "name": "Abyssal Lich",
+      "slug": "abyssal-lich",
+      "image": "./assets/ascendancies/abyssal-lich.webp",
+      "sourceIndex": 13
+    },
+    "ClassesLich": {
+      "asset": "ClassesLich",
+      "name": "Lich",
+      "slug": "lich",
+      "image": "./assets/ascendancies/lich.webp",
+      "sourceIndex": 14
+    },
+    "ClassesMarauder": {
+      "asset": "ClassesMarauder",
+      "name": "Marauder",
+      "slug": "marauder",
+      "image": "./assets/ascendancies/marauder.webp",
+      "sourceIndex": 15
+    },
+    "ClassesMercenary": {
+      "asset": "ClassesMercenary",
+      "name": "Mercenary",
+      "slug": "mercenary",
+      "image": "./assets/ascendancies/mercenary.webp",
+      "sourceIndex": 16
+    },
+    "ClassesMonk": {
+      "asset": "ClassesMonk",
+      "name": "Monk",
+      "slug": "monk",
+      "image": "./assets/ascendancies/monk.webp",
+      "sourceIndex": 17
+    },
+    "ClassesOracle": {
+      "asset": "ClassesOracle",
+      "name": "Oracle",
+      "slug": "oracle",
+      "image": "./assets/ascendancies/oracle.webp",
+      "sourceIndex": 18
+    },
+    "ClassesPathfinder": {
+      "asset": "ClassesPathfinder",
+      "name": "Pathfinder",
+      "slug": "pathfinder",
+      "image": "./assets/ascendancies/pathfinder.webp",
+      "sourceIndex": 19
+    },
+    "ClassesRitualist": {
+      "asset": "ClassesRitualist",
+      "name": "Ritualist",
+      "slug": "ritualist",
+      "image": "./assets/ascendancies/ritualist.webp",
+      "sourceIndex": 20
+    },
+    "ClassesRanger": {
+      "asset": "ClassesRanger",
+      "name": "Ranger",
+      "slug": "ranger",
+      "image": "./assets/ascendancies/ranger.webp",
+      "sourceIndex": 21
+    },
+    "ClassesShadow": {
+      "asset": "ClassesShadow",
+      "name": "Shadow",
+      "slug": "shadow",
+      "image": "./assets/ascendancies/shadow.webp",
+      "sourceIndex": 22
+    },
+    "ClassesShaman": {
+      "asset": "ClassesShaman",
+      "name": "Shaman",
+      "slug": "shaman",
+      "image": "./assets/ascendancies/shaman.webp",
+      "sourceIndex": 23
+    },
+    "ClassesSmith of Kitava": {
+      "asset": "ClassesSmith of Kitava",
+      "name": "Smith of Kitava",
+      "slug": "smith-of-kitava",
+      "image": "./assets/ascendancies/smith-of-kitava.webp",
+      "sourceIndex": 24
+    },
+    "ClassesSorceress": {
+      "asset": "ClassesSorceress",
+      "name": "Sorceress",
+      "slug": "sorceress",
+      "image": "./assets/ascendancies/sorceress.webp",
+      "sourceIndex": 25
+    },
+    "ClassesStormweaver": {
+      "asset": "ClassesStormweaver",
+      "name": "Stormweaver",
+      "slug": "stormweaver",
+      "image": "./assets/ascendancies/stormweaver.webp",
+      "sourceIndex": 26
+    },
+    "ClassesTactician": {
+      "asset": "ClassesTactician",
+      "name": "Tactician",
+      "slug": "tactician",
+      "image": "./assets/ascendancies/tactician.webp",
+      "sourceIndex": 27
+    },
+    "ClassesTemplar": {
+      "asset": "ClassesTemplar",
+      "name": "Templar",
+      "slug": "templar",
+      "image": "./assets/ascendancies/templar.webp",
+      "sourceIndex": 28
+    },
+    "ClassesTitan": {
+      "asset": "ClassesTitan",
+      "name": "Titan",
+      "slug": "titan",
+      "image": "./assets/ascendancies/titan.webp",
+      "sourceIndex": 29
+    },
+    "ClassesWarbringer": {
+      "asset": "ClassesWarbringer",
+      "name": "Warbringer",
+      "slug": "warbringer",
+      "image": "./assets/ascendancies/warbringer.webp",
+      "sourceIndex": 30
+    },
+    "ClassesWarrior": {
+      "asset": "ClassesWarrior",
+      "name": "Warrior",
+      "slug": "warrior",
+      "image": "./assets/ascendancies/warrior.webp",
+      "sourceIndex": 31
+    },
+    "ClassesWitch": {
+      "asset": "ClassesWitch",
+      "name": "Witch",
+      "slug": "witch",
+      "image": "./assets/ascendancies/witch.webp",
+      "sourceIndex": 32
+    },
+    "ClassesWitchhunter": {
+      "asset": "ClassesWitchhunter",
+      "name": "Witchhunter",
+      "slug": "witchhunter",
+      "image": "./assets/ascendancies/witchhunter.webp",
+      "sourceIndex": 33
+    }
+  },
+  "byClass": {
+    "Ranger": "./assets/ascendancies/ranger.webp",
+    "Huntress": "./assets/ascendancies/huntress.webp",
+    "Warrior": "./assets/ascendancies/warrior.webp",
+    "Mercenary": "./assets/ascendancies/mercenary.webp",
+    "Druid": "./assets/ascendancies/druid.webp",
+    "Witch": "./assets/ascendancies/witch.webp",
+    "Sorceress": "./assets/ascendancies/sorceress.webp",
+    "Monk": "./assets/ascendancies/monk.webp"
+  },
+  "byAscendancy": {
+    "Deadeye": "./assets/ascendancies/deadeye.webp",
+    "Pathfinder": "./assets/ascendancies/pathfinder.webp",
+    "Amazon": "./assets/ascendancies/amazon.webp",
+    "Ritualist": "./assets/ascendancies/ritualist.webp",
+    "Titan": "./assets/ascendancies/titan.webp",
+    "Warbringer": "./assets/ascendancies/warbringer.webp",
+    "Smith of Kitava": "./assets/ascendancies/smith-of-kitava.webp",
+    "Tactician": "./assets/ascendancies/tactician.webp",
+    "Witchhunter": "./assets/ascendancies/witchhunter.webp",
+    "Gemling Legionnaire": "./assets/ascendancies/gemling-legionnaire.webp",
+    "Oracle": "./assets/ascendancies/oracle.webp",
+    "Shaman": "./assets/ascendancies/shaman.webp",
+    "Infernalist": "./assets/ascendancies/infernalist.webp",
+    "Blood Mage": "./assets/ascendancies/blood-mage.webp",
+    "Lich": "./assets/ascendancies/lich.webp",
+    "Abyssal Lich": "./assets/ascendancies/abyssal-lich.webp",
+    "Stormweaver": "./assets/ascendancies/stormweaver.webp",
+    "Chronomancer": "./assets/ascendancies/chronomancer.webp",
+    "Disciple of Varashta": "./assets/ascendancies/disciple-of-varashta.webp",
+    "Invoker": "./assets/ascendancies/invoker.webp",
+    "Acolyte of Chayula": "./assets/ascendancies/acolyte-of-chayula.webp"
+  }
+};

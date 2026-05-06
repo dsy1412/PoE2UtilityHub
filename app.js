@@ -6,6 +6,7 @@
   const poe2Skills = window.POE2DB_SKILL_GEMS || [];
   const pobImports = window.POB_IMPORTS || {};
   const pobTree = window.POB_TREE_0_4 || null;
+  const pobAscendancies = window.POB_ASCENDANCIES || {};
   let builds = [...baseBuilds, ...loadImportedDrafts()];
   let currentLang = localStorage.getItem("toolman.lang") || "zh";
   const englishText = {
@@ -104,6 +105,20 @@
     builds = [...baseBuilds, ...drafts.slice(0, 20)];
   }
 
+  function valueByLooseName(map, name) {
+    if (!map || !name) return "";
+    if (map[name]) return map[name];
+    const target = String(name).trim().toLowerCase();
+    const foundKey = Object.keys(map).find((key) => key.trim().toLowerCase() === target);
+    return foundKey ? map[foundKey] : "";
+  }
+
+  function portraitForCharacter(className, ascendancy, fallback = "./assets/ascendancies/mercenary.webp") {
+    return valueByLooseName(pobAscendancies.byAscendancy, ascendancy)
+      || valueByLooseName(pobAscendancies.byClass, className)
+      || fallback;
+  }
+
   function normalizeImportedBuild(build) {
     if (!build || !build.importMeta) return build;
     const meta = build.importMeta;
@@ -121,6 +136,7 @@
       },
       title: `0.4 ${character}`,
       shortTitle: character,
+      portrait: portraitForCharacter(meta.className || build.className, meta.ascendancy || build.ascendancy, build.portrait || "./assets/ascendancies/mercenary.webp"),
       season: build.season || "0.4",
       mode: build.mode && !/待归类|PoB/.test(build.mode) ? build.mode : "待归类",
       cost: build.cost && !/待定/.test(build.cost) ? build.cost : "待定造价",
@@ -985,7 +1001,7 @@
       ascendancy,
       cost: "待定",
       mode: "待归类",
-      portrait: "./assets/gemling-legionnaire.webp",
+      portrait: portraitForCharacter(className, ascendancy, "./assets/ascendancies/gemling-legionnaire.webp"),
       status: "角色导入模板，需人工整理",
       tagline: `从 poe.ninja / ${characterName} 导入的工具人角色模板，请按实际 BD 修改定位、队伍收益和实战说明。`,
       templateType: "poe-ninja-character",

@@ -2,3 +2,9 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+.tmp/
+assets/skill-test-icons/
+data/skill-test.js
+data/skill-test.json
+__pycache__/
+scripts/__pycache__/
